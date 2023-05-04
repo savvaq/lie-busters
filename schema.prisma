@@ -1,0 +1,81 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model Game {
+  id           Int       @id @default(autoincrement())
+  code         String
+  currentRound Int       @default(0)
+  language     String    @default("en")
+  createdAt    DateTime  @default(now())
+  startedAt    DateTime?
+  finishedAt   DateTime?
+
+  players Player[]
+  Answer  Answer[]
+}
+
+model Player {
+  id     Int     @id @default(autoincrement())
+  name   String
+  score  Int     @default(0)
+  isHost Boolean @default(false)
+
+  gameId Int
+  game   Game @relation(fields: [gameId], references: [id])
+
+  answers Answer[]
+  votes   Vote[]
+
+  @@index([gameId])
+}
+
+model Question {
+  id       Int    @id @default(autoincrement())
+  text     String
+  answer   String
+  language String @default("en")
+
+  Answer Answer[]
+}
+
+model Answer {
+  id        Int      @id @default(autoincrement())
+  text      String
+  createdAt DateTime @default(now())
+
+  question   Question @relation(fields: [questionId], references: [id])
+  questionId Int
+
+  gameId Int
+  game   Game @relation(fields: [gameId], references: [id])
+
+  playerId Int?
+  player   Player? @relation(fields: [playerId], references: [id])
+
+  votes Vote[]
+
+  @@index([questionId])
+  @@index([gameId])
+  @@index([playerId])
+}
+
+model Vote {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+
+  answerId Int
+  answer   Answer @relation(fields: [answerId], references: [id])
+
+  playerId Int
+  player   Player @relation(fields: [playerId], references: [id])
+
+  @@index([answerId])
+  @@index([playerId])
+}
