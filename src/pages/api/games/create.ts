@@ -10,6 +10,20 @@ export default async function handler(
 ) {
   const name = req.query.name as string;
 
+  await prisma.question.create({
+    data: {
+      language: 'en',
+      text: 'What is the capital of France?',
+      answer: 'Paris',
+    },
+  });
+
+  const randomQuestionId =
+    await prisma.$queryRaw`SELECT id FROM Question WHERE language = 'en' ORDER BY RAND() LIMIT 1`;
+
+  console.log(randomQuestionId);
+  return;
+
   const game = await prisma.game.create({
     data: {
       code: uid(6).toUpperCase(),
