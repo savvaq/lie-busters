@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next';
-import prisma from '../../../lib/prisma';
+import prisma from '@/lib/prisma';
 
 export default async function handler(
   req: NextApiRequest,
@@ -8,7 +8,7 @@ export default async function handler(
 ) {
   const code = req.query.code as string;
 
-  const game = await prisma.game.findFirst({
+  const game = await prisma.game.findFirstOrThrow({
     where: {
       code,
     },
@@ -17,9 +17,5 @@ export default async function handler(
     },
   });
 
-  if (game) {
-    res.status(200).json(game);
-  } else {
-    res.status(404).json({ error: 'Game not found' });
-  }
+  res.status(200).json(game);
 }
