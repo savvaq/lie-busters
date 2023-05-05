@@ -1,5 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { z } from 'zod';
 import { Game } from '@prisma/client';
 import prisma from '@/lib/prisma';
 import pusher from '@/lib/pusher';
@@ -9,11 +10,18 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Game | ResponseError>
 ) {
-  const code = req.body.code as string;
-  const name = req.body.name as string;
+  const schema = z.object({
+    code: z.string(),
+    name: z.string().min(2).max(20),
+  });
+  const response = schema.safeParse(req.body);
+
+  if (!response.success) {
+    return res.status(400).json({ message: 'Invalid request' });
+  }
 
   const game = await prisma.game.findFirstOrThrow({
-    where: { code },
+    where: { code: response.data.code },
     orderBy: { createdAt: 'desc' },
     include: { players: true },
   });
@@ -30,13 +38,13 @@ export default async function handler(
     return res.status(400).json({ message: 'Game is full' });
   }
 
-  if (game.players.some((player) => player.name === name)) {
+  if (game.players.some((player) => player.name === response.data.name)) {
     return res.status(400).json({ message: 'Name already taken' });
   }
 
   const player = await prisma.player.create({
     data: {
-      name,
+      name: response.data.name,
       gameId: game.id,
       isHost: false,
     },

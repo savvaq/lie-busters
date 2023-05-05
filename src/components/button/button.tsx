@@ -1,9 +1,9 @@
-import { FC } from 'react';
+import { FC, MouseEventHandler } from 'react';
 import styles from './Button.module.css';
 
 type ButtonProps = {
   text: string;
-  onclick: () => void;
+  onclick: MouseEventHandler;
 };
 
 const Button: FC<ButtonProps> = (props) => {

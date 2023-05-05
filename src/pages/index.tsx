@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import styles from '@/styles/Home.module.css';
 import Button from '../components/button/button.jsx';
-import { useState } from 'react';
+import { useState, MouseEventHandler } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router.js';
 
@@ -17,7 +17,7 @@ export default function Home() {
     setShowCreateGameModal(true);
   };
 
-  const handleCreateGameClick = (e) => {
+  const handleCreateGameClick: MouseEventHandler = (e) => {
     e.preventDefault();
 
     axios
@@ -33,7 +33,7 @@ export default function Home() {
       });
   };
 
-  const handleJoinGameClick = (e) => {
+  const handleJoinGameClick: MouseEventHandler = (e) => {
     e.preventDefault();
 
     axios
