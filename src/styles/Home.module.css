@@ -5,6 +5,7 @@
     grid-template-rows: repeat(3, auto);
     margin: 20%;
     row-gap: 2rem;
+    position: relative;
 }
 
 .title {
@@ -28,4 +29,15 @@
     border: 3px solid white;
     border-radius: 10px;
     justify-self: center;
+}
+
+.create-game-modal {
+    background-color: beige;
+    /* position: absolute; */
+    
+}
+
+.join-game-modal {
+    background-color: beige;
+    /* position: absolute; */
 }

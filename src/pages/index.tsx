@@ -1,11 +1,23 @@
 import Head from 'next/head'
-import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
 import Button from '../components/button/button.jsx'
-
-const inter = Inter({ subsets: ['latin'] })
+import { useState } from 'react'
 
 export default function Home() {
+  
+  const [showCreateGameModal, setShowCreateGameModal] = useState(false)
+  const [showJoinGameModal, setShowJoinGameModal] = useState(false)
+  
+  const handleCreateGameClick = () => {
+    setShowCreateGameModal(true)
+    console.log(showCreateGameModal)
+  }
+
+  const handleJoinGameClick = () => {
+    setShowJoinGameModal(true)
+    console.log(showJoinGameModal)
+  }
+
   return (
     <>
       <Head>
@@ -17,20 +29,39 @@ export default function Home() {
       <div className={styles.gamewrapper}>
         <h1 className={styles.title}>Lying Game</h1>
         <p className={styles.description}>Play with your friends!</p>
-        <Button text="Create Game" />
-        <Button text="Join Game" />
+        <Button text="Create Game" onclick={handleCreateGameClick} />
+        <Button text="Join Game" onclick={handleJoinGameClick} />
         <div className={styles.rules}>
           <h2>Rules</h2>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec auctor, nisl eget ultricies ultricies, nunc nisl ultricies nunc, nec ultricies nisl nisl eget nisl. Donec auctor, nisl eget ultricies ultricies, nunc nisl ultricies nunc, nec ultricies nisl nisl eget nisl.</p>        
         </div>
+        {
+          showCreateGameModal === true ?
+            <div className={styles['create-game-modal']}>
+              <h2>Create Game</h2>
+              <form>
+                <label htmlFor="name">Your Name</label>
+                <input type="text" id="name" name="name" />
+                <Button text="Submit" />
+              </form>
+            </div>
+          : null
+        }
+        {
+          showJoinGameModal === true ?
+            <div className={styles['join-game-modal']}>
+              <h2>Join Game</h2>
+              <form>
+                <label htmlFor="name">Your Name</label>
+                <input type="text" id="name" name="name" />
+                <label htmlFor="code">Code</label>
+                <input type="text" id="code" name="code" />
+                <Button text="Submit" />
+              </form>
+            </div>
+          : null
+        }
       </div>
     </>
-    // First button on click shows a modal to enter your name
-    // button to create a game
-    // on click it goes to another "Lobby" page
-
-    // Second button on click shows a modal to enter the code for the game
-    // two fields - one for name and one for code
-    // and submit button
   )
 }
