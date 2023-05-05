@@ -11,14 +11,14 @@ datasource db {
 model Game {
   id           Int       @id @default(autoincrement())
   code         String
-  currentRound Int       @default(0)
   language     String    @default("en")
   createdAt    DateTime  @default(now())
   startedAt    DateTime?
   finishedAt   DateTime?
 
   players Player[]
-  Answer  Answer[]
+  rounds  Round[]
+  answers Answer[]
 }
 
 model Player {
@@ -42,7 +42,23 @@ model Question {
   answer   String
   language String @default("en")
 
-  Answer Answer[]
+  answers Answer[]
+  rounds  Round[]
+}
+
+model Round {
+  id        Int      @id @default(autoincrement())
+  number    Int
+  createdAt DateTime @default(now())
+
+  gameId Int
+  game   Game @relation(fields: [gameId], references: [id])
+
+  questionId Int
+  question   Question @relation(fields: [questionId], references: [id])
+
+  @@index([gameId])
+  @@index([questionId])
 }
 
 model Answer {
