@@ -8,8 +8,8 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Game | ResponseError>
 ) {
-  const code = req.query.code as string;
-  const name = req.query.name as string;
+  const code = req.body.code as string;
+  const name = req.body.name as string;
 
   const game = await prisma.game.findFirstOrThrow({
     where: { code },
