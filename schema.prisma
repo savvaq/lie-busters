@@ -28,7 +28,7 @@ model Player {
   isHost Boolean @default(false)
 
   gameId Int
-  game   Game @relation(fields: [gameId], references: [id])
+  game   Game @relation(fields: [gameId], references: [id], onDelete: Cascade)
 
   answers Answer[]
   votes   Vote[]
@@ -52,7 +52,7 @@ model Round {
   createdAt DateTime @default(now())
 
   gameId Int
-  game   Game @relation(fields: [gameId], references: [id])
+  game   Game @relation(fields: [gameId], references: [id], onDelete: Cascade)
 
   questionId Int
   question   Question @relation(fields: [questionId], references: [id])
@@ -70,7 +70,7 @@ model Answer {
   questionId Int
 
   gameId Int
-  game   Game @relation(fields: [gameId], references: [id])
+  game   Game @relation(fields: [gameId], references: [id], onDelete: Cascade)
 
   playerId Int?
   player   Player? @relation(fields: [playerId], references: [id])
