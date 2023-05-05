@@ -1,14 +1,14 @@
 .button {
-    background-color: #4CAF50; /* Green */
+    background-color: #FFD166;
+    width: 180px;
+    height: 40px;
     border: none;
-    color: white;
-    padding: 20px 30px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 24px;
+    font-size: 18px;
     font-weight: bold;
-    border: 2px solid #0c4f0e;
-    border-radius: 10px;
+    border-radius: 15px;
     cursor: pointer;
+    justify-self: center;
 }
