@@ -10,10 +10,10 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Game | ResponseError>
 ) {
-  const code = req.query.code as string;
+  const id = req.body.id as string;
 
   const game = await prisma.game.findFirstOrThrow({
-    where: { code },
+    where: { id: Number(id) },
     orderBy: { createdAt: 'desc' },
     include: { players: true, rounds: true },
   });
@@ -46,7 +46,7 @@ export default async function handler(
 
   game.rounds = [round];
 
-  pusher.trigger(`game-${game.code}`, 'round-started', round);
+  pusher.trigger(`game-${game.code}`, 'round-started', game);
 
   res.status(200).json(game);
 }

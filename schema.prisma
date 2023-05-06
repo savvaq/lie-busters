@@ -47,10 +47,11 @@ model Question {
 }
 
 model Round {
-  id         Int       @id @default(autoincrement())
-  number     Int
-  startedAt  DateTime  @default(now())
-  finishedAt DateTime?
+  id             Int       @id @default(autoincrement())
+  number         Int
+  startedAt      DateTime  @default(now())
+  votesStartedAt DateTime?
+  finishedAt     DateTime?
 
   gameId Int
   game   Game @relation(fields: [gameId], references: [id], onDelete: Cascade)

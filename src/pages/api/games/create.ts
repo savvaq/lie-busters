@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { Game } from '@prisma/client';
 import { uid } from 'uid';
 import { z } from 'zod';
+import { setCookie } from 'cookies-next';
 import prisma from '@/lib/prisma';
 import { ResponseError } from '@/lib/types';
 
@@ -19,7 +20,6 @@ export default async function handler(
 
   const game = await prisma.game.create({
     data: { code: uid(6).toUpperCase() },
-    include: { players: true },
   });
 
   const player = await prisma.player.create({
@@ -30,7 +30,12 @@ export default async function handler(
     },
   });
 
-  game.players = [player];
+  setCookie('playerId', String(player.id), {
+    res,
+    req,
+    maxAge: 60 * 60 * 24,
+    httpOnly: true,
+  });
 
   res.status(200).json(game);
 }

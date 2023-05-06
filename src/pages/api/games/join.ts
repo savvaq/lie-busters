@@ -5,6 +5,7 @@ import { Game } from '@prisma/client';
 import prisma from '@/lib/prisma';
 import pusher from '@/lib/pusher';
 import { ResponseError } from '@/lib/types';
+import { setCookie } from 'cookies-next';
 
 export default async function handler(
   req: NextApiRequest,
@@ -48,6 +49,13 @@ export default async function handler(
       gameId: game.id,
       isHost: false,
     },
+  });
+
+  setCookie('playerId', String(player.id), {
+    res,
+    req,
+    maxAge: 60 * 60 * 24,
+    httpOnly: true,
   });
 
   game.players = [...game.players, player];
