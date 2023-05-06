@@ -9,12 +9,12 @@ datasource db {
 }
 
 model Game {
-  id           Int       @id @default(autoincrement())
-  code         String
-  language     String    @default("en")
-  createdAt    DateTime  @default(now())
-  startedAt    DateTime?
-  finishedAt   DateTime?
+  id         Int       @id @default(autoincrement())
+  code       String
+  language   String    @default("en")
+  createdAt  DateTime  @default(now())
+  startedAt  DateTime?
+  finishedAt DateTime?
 
   players Player[]
   rounds  Round[]
@@ -47,15 +47,18 @@ model Question {
 }
 
 model Round {
-  id        Int      @id @default(autoincrement())
-  number    Int
-  createdAt DateTime @default(now())
+  id         Int       @id @default(autoincrement())
+  number     Int
+  startedAt  DateTime  @default(now())
+  finishedAt DateTime?
 
   gameId Int
   game   Game @relation(fields: [gameId], references: [id], onDelete: Cascade)
 
   questionId Int
   question   Question @relation(fields: [questionId], references: [id])
+
+  answers Answer[]
 
   @@index([gameId])
   @@index([questionId])
@@ -63,7 +66,7 @@ model Round {
 
 model Answer {
   id        Int      @id @default(autoincrement())
-  text      String
+  value     String
   createdAt DateTime @default(now())
 
   question   Question @relation(fields: [questionId], references: [id])
@@ -71,6 +74,9 @@ model Answer {
 
   gameId Int
   game   Game @relation(fields: [gameId], references: [id], onDelete: Cascade)
+
+  roundId Int
+  round   Round @relation(fields: [roundId], references: [id])
 
   playerId Int?
   player   Player? @relation(fields: [playerId], references: [id])
@@ -80,6 +86,7 @@ model Answer {
   @@index([questionId])
   @@index([gameId])
   @@index([playerId])
+  @@index([roundId])
 }
 
 model Vote {

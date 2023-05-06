@@ -13,10 +13,6 @@ export default function Home() {
   const [name, setName] = useState('');
   const [code, setCode] = useState('');
 
-  const handleCreateGameModal = () => {
-    setShowCreateGameModal(true);
-  };
-
   const handleCreateGameClick: MouseEventHandler = (e) => {
     e.preventDefault();
 
@@ -49,10 +45,6 @@ export default function Home() {
       });
   };
 
-  const handleJoinGameModalClick = () => {
-    setShowJoinGameModal(true);
-  };
-
   return (
     <>
       <Head>
@@ -64,8 +56,11 @@ export default function Home() {
       <div className={styles.gamewrapper}>
         <h1 className={styles.title}>Lying Game</h1>
         <p className={styles.description}>Play with your friends!</p>
-        <Button text="Create Game" onclick={handleCreateGameModal} />
-        <Button text="Join Game" onclick={handleJoinGameModalClick} />
+        <Button
+          text="Create Game"
+          onclick={() => setShowCreateGameModal(true)}
+        />
+        <Button text="Join Game" onclick={() => setShowJoinGameModal(true)} />
         <div className={styles.rules}>
           <h2>Rules</h2>
           <p>
