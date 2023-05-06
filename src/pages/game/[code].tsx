@@ -40,6 +40,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 const Game: FC<GameProps> = (props) => {
   const [game, setGame] = useState<GameWithRelations>(props.game);
   const stage = useStage(game);
+  const isHost = props.player.isHost;
 
   useListenToPusherEvents(game.code, setGame);
 
@@ -51,11 +52,9 @@ const Game: FC<GameProps> = (props) => {
 
   switch (stage) {
     case 'lobby':
-      return (
-        <Lobby game={game} isHost={props.player.isHost} startGame={startGame} />
-      );
+      return <Lobby game={game} isHost={isHost} startGame={startGame} />;
     case 'question':
-      return <Question game={game} isHost={props.player.isHost} />;
+      return <Question game={game} isHost={isHost} />;
     default:
       return <div>Something went wrong</div>;
   }
