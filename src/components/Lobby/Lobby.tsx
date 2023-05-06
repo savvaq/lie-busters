@@ -17,7 +17,11 @@ const Lobby: FC<LobbyProps> = ({ game, isHost, startGame }) => {
       })}
 
       {isHost && (
-        <button type="button" onClick={startGame}>
+        <button
+          type="button"
+          onClick={startGame}
+          disabled={!game.players || game.players.length < 2}
+        >
           Start game
         </button>
       )}

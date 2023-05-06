@@ -45,7 +45,7 @@ const Game: FC<GameProps> = (props) => {
 
   const startGame = () => {
     axios
-      .post<GameWithRelations>('/api/games/start', { id: game.id })
+      .post('/api/games/start', { id: game.id })
       .catch((err) => console.log(err.response));
   };
 
