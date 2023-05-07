@@ -1,14 +1,15 @@
 import React, { FC, useState } from 'react';
 import { GetServerSidePropsContext } from 'next';
-import axios from 'axios';
 import { getCookie } from 'cookies-next';
-import prisma from '@/lib/prisma';
 import { GameWithRelations } from '@/lib/types';
 import Lobby from '@/components/Lobby/Lobby';
 import useListenToPusherEvents from '@/hooks/useListenToPusherEvents';
 import useStage from '@/hooks/useStage';
 import { Player } from '@prisma/client';
 import Question from '@/components/Question/Question';
+import Voting from '@/components/Voting/Voting';
+import { startGameApi } from '@/lib/api';
+import { findGameByCode } from '@/lib/repository';
 
 type GameProps = {
   game: GameWithRelations;
@@ -17,17 +18,7 @@ type GameProps = {
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const code = context.params?.code as string;
-  const game = await prisma.game.findFirst({
-    where: { code },
-    orderBy: { createdAt: 'desc' },
-    include: {
-      players: true,
-      rounds: {
-        orderBy: { startedAt: 'desc' },
-        include: { question: true },
-      },
-    },
-  });
+  const game = await findGameByCode(code);
 
   const player = game?.players?.find(
     (player) =>
@@ -44,17 +35,15 @@ const Game: FC<GameProps> = (props) => {
 
   useListenToPusherEvents(game.code, setGame);
 
-  const startGame = () => {
-    axios
-      .post('/api/games/start', { id: game.id })
-      .catch((err) => console.log(err.response));
-  };
+  const startGame = () => startGameApi(game.id);
 
   switch (stage) {
     case 'lobby':
       return <Lobby game={game} isHost={isHost} startGame={startGame} />;
     case 'question':
       return <Question game={game} isHost={isHost} />;
+    case 'voting':
+      return <Voting game={game} />;
     default:
       return <div>Something went wrong</div>;
   }

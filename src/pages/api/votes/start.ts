@@ -3,7 +3,7 @@ import { Game } from '@prisma/client';
 import { ResponseError } from '@/lib/types';
 import pusher from '@/lib/pusher';
 import { getCookie } from 'cookies-next';
-import { createAnswer, findGameById } from '@/lib/repository';
+import { findGameById, updateRound } from '@/lib/repository';
 
 export default async function handler(
   req: NextApiRequest,
@@ -11,34 +11,23 @@ export default async function handler(
 ) {
   const gameId = req.body.gameId as string;
   const roundId = req.body.roundId as string;
-  const value = req.body.value as string;
   const playerId = getCookie('playerId', { req });
 
   const game = await findGameById(Number(gameId));
-
   const player = game.players.find((player) => player.id === Number(playerId));
-  const round = game.rounds.find((round) => round.id === Number(roundId));
+  const roundIndex = game.rounds.findIndex(
+    (round) => round.id === Number(roundId)
+  );
+  let round = game.rounds[roundIndex];
 
-  if (!player || !round) {
+  if (player?.isHost !== true) {
     return res.status(400).json({ message: 'Invalid request' });
   }
 
-  const secondsPassed = (Date.now() - round.startedAt.getTime()) / 1000;
+  round = await updateRound(round.id, { votesStartedAt: new Date() });
+  game.rounds[roundIndex] = round;
 
-  if (round.votesStartedAt || round.finishedAt || secondsPassed >= 35) {
-    return res.status(400).json({ message: 'Too late' });
-  }
-
-  const answer = await createAnswer(
-    round.questionId,
-    player.id,
-    round.id,
-    value
-  );
-
-  round.answers.push(answer);
-
-  pusher.trigger(`game-${game.code}`, 'player-answered', player);
+  pusher.trigger(`game-${game.code}`, 'voting-started', game);
 
   res.status(200).json(game);
 }

@@ -1,9 +1,10 @@
 import { GameWithRelations } from '@/lib/types';
 
-type Stage = 'lobby' | 'question' | 'vote' | 'results' | 'gameover';
+type Stage = 'lobby' | 'question' | 'voting' | 'results' | 'gameover';
 
 const useStage = (game: GameWithRelations): Stage => {
-  if (!game.rounds) {
+  console.log(game);
+  if (!game.rounds || game.rounds.length === 0) {
     return 'lobby';
   }
 
@@ -18,7 +19,7 @@ const useStage = (game: GameWithRelations): Stage => {
   }
 
   if (currentRound.votesStartedAt && !currentRound.finishedAt) {
-    return 'vote';
+    return 'voting';
   }
 
   return 'results';

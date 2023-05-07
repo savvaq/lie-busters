@@ -2,10 +2,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { z } from 'zod';
 import { Game } from '@prisma/client';
-import prisma from '@/lib/prisma';
 import pusher from '@/lib/pusher';
 import { ResponseError } from '@/lib/types';
 import { setCookie } from 'cookies-next';
+import { createPlayer, findGameByCode } from '@/lib/repository';
 
 export default async function handler(
   req: NextApiRequest,
@@ -21,11 +21,7 @@ export default async function handler(
     return res.status(400).json({ message: 'Invalid request' });
   }
 
-  const game = await prisma.game.findFirstOrThrow({
-    where: { code: response.data.code },
-    orderBy: { createdAt: 'desc' },
-    include: { players: true },
-  });
+  const game = await findGameByCode(response.data.code);
 
   if (game.finishedAt) {
     return res.status(400).json({ message: 'Game already finished' });
@@ -43,13 +39,7 @@ export default async function handler(
     return res.status(400).json({ message: 'Name already taken' });
   }
 
-  const player = await prisma.player.create({
-    data: {
-      name: response.data.name,
-      gameId: game.id,
-      isHost: false,
-    },
-  });
+  const player = await createPlayer(game.id, response.data.name, false);
 
   setCookie('playerId', String(player.id), {
     res,

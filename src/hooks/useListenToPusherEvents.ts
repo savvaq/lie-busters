@@ -10,7 +10,8 @@ const useListenToPusherEvents = (
     pusher
       .subscribe(`game-${code}`)
       .bind('player-joined', (data: GameWithRelations) => setGame(data))
-      .bind('round-started', (data: GameWithRelations) => setGame(data));
+      .bind('round-started', (data: GameWithRelations) => setGame(data))
+      .bind('voting-started', (data: GameWithRelations) => setGame(data));
   }, [code, setGame]);
 };
 

@@ -1,11 +1,10 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { Game } from '@prisma/client';
-import { uid } from 'uid';
 import { z } from 'zod';
 import { setCookie } from 'cookies-next';
-import prisma from '@/lib/prisma';
 import { ResponseError } from '@/lib/types';
+import { createGame, createPlayer } from '@/lib/repository';
 
 export default async function handler(
   req: NextApiRequest,
@@ -18,17 +17,8 @@ export default async function handler(
     return res.status(400).json({ message: 'Invalid request' });
   }
 
-  const game = await prisma.game.create({
-    data: { code: uid(6).toUpperCase() },
-  });
-
-  const player = await prisma.player.create({
-    data: {
-      name: response.data.name,
-      gameId: game.id,
-      isHost: true,
-    },
-  });
+  const game = await createGame();
+  const player = await createPlayer(game.id, response.data.name, true);
 
   setCookie('playerId', String(player.id), {
     res,

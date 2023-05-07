@@ -18,7 +18,6 @@ model Game {
 
   players Player[]
   rounds  Round[]
-  answers Answer[]
 }
 
 model Player {
@@ -37,10 +36,10 @@ model Player {
 }
 
 model Question {
-  id       Int    @id @default(autoincrement())
-  text     String
-  answer   String
-  language String @default("en")
+  id            Int    @id @default(autoincrement())
+  text          String
+  correctAnswer String
+  language      String @default("en")
 
   answers Answer[]
   rounds  Round[]
@@ -60,6 +59,7 @@ model Round {
   question   Question @relation(fields: [questionId], references: [id])
 
   answers Answer[]
+  votes   Vote[]
 
   @@index([gameId])
   @@index([questionId])
@@ -68,24 +68,21 @@ model Round {
 model Answer {
   id        Int      @id @default(autoincrement())
   value     String
+  isCorrect Boolean
   createdAt DateTime @default(now())
 
   question   Question @relation(fields: [questionId], references: [id])
   questionId Int
 
-  gameId Int
-  game   Game @relation(fields: [gameId], references: [id], onDelete: Cascade)
-
   roundId Int
   round   Round @relation(fields: [roundId], references: [id])
 
-  playerId Int?
-  player   Player? @relation(fields: [playerId], references: [id])
+  playerId Int
+  player   Player @relation(fields: [playerId], references: [id])
 
   votes Vote[]
 
   @@index([questionId])
-  @@index([gameId])
   @@index([playerId])
   @@index([roundId])
 }
@@ -94,12 +91,16 @@ model Vote {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
 
-  answerId Int
-  answer   Answer @relation(fields: [answerId], references: [id])
+  answerId Int?
+  answer   Answer? @relation(fields: [answerId], references: [id])
 
   playerId Int
   player   Player @relation(fields: [playerId], references: [id])
 
+  roundId Int
+  round   Round @relation(fields: [roundId], references: [id])
+
   @@index([answerId])
   @@index([playerId])
+  @@index([roundId])
 }
