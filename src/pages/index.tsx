@@ -2,7 +2,6 @@ import Head from 'next/head';
 import styles from '@/styles/Home.module.css';
 import Button from '../components/Button/Button';
 import { useState, MouseEventHandler } from 'react';
-import axios from 'axios';
 import { useRouter } from 'next/router.js';
 import { sigmar } from '../app/fonts'
 
@@ -17,32 +16,17 @@ export default function Home() {
   const handleCreateGameClick: MouseEventHandler = (e) => {
     e.preventDefault();
 
-    axios
-      .post('/api/games/create', {
-        name: name,
-      })
-      .then((res) => {
-        router.push(`/game/${res.data.code}`);
-      })
-      .catch((err) => {
-        console.log(err.response);
-      });
+    createGameApi(name).then((res) => {
+      router.push(`/game/${res.data.code}`);
+    });
   };
 
   const handleJoinGameClick: MouseEventHandler = (e) => {
     e.preventDefault();
 
-    axios
-      .post('/api/games/join', {
-        name: name,
-        code: code,
-      })
-      .then((res) => {
-        router.push(`/game/${res.data.code}`);
-      })
-      .catch((err) => {
-        console.log(err.response);
-      });
+    joinGameApi(name, code).then((res) => {
+      router.push(`/game/${res.data.code}`);
+    });
   };
 
   return (

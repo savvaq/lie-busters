@@ -2,15 +2,14 @@ import { FC, useCallback, useState } from 'react';
 import { GameWithRelations } from '@/lib/types';
 import { saveAnswerApi, startVotingApi } from '@/lib/api';
 import useTimer from './useTimer';
+import useCountAnsweredPlayers from './useCountAnsweredPlayers';
 
 type QuestionProps = {
   game: GameWithRelations;
   isHost: boolean;
 };
 
-// TODO: Start voting when everyone has answered
-
-const Question: FC<QuestionProps> = ({ game }) => {
+const Question: FC<QuestionProps> = ({ game, isHost }) => {
   const [value, setValue] = useState('');
   const [isSaving, setIsSaving] = useState(false);
   const [isAnswered, setIsAnswered] = useState(false);
@@ -22,19 +21,21 @@ const Question: FC<QuestionProps> = ({ game }) => {
 
     setIsSaving(true);
 
-    saveAnswerApi(game.id, currentRound?.id, value).then(() => {
+    saveAnswerApi(game.id, currentRound.id, value).then(() => {
       setIsSaving(false);
       setIsAnswered(true);
     });
   };
 
   const startVoting = useCallback(() => {
-    if (!currentRound) return;
+    if (!currentRound || !isHost) return;
 
     startVotingApi(game.id, currentRound.id);
-  }, [game, currentRound]);
+  }, [game, currentRound, isHost]);
 
   const { timeLeft } = useTimer(startVoting);
+
+  useCountAnsweredPlayers(game, startVoting);
 
   return (
     <div>
