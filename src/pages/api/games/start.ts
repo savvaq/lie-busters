@@ -1,22 +1,17 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { Game } from '@prisma/client';
-import prisma from '@/lib/prisma';
 import pusher from '@/lib/pusher';
 import { ResponseError } from '@/lib/types';
-import randomItemFromArray from '@/helpers/randomItemFromArray';
+import { createRound, findGameById } from '@/lib/repository';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Game | ResponseError>
 ) {
-  const code = req.query.code as string;
+  const id = req.body.id as string;
 
-  const game = await prisma.game.findFirstOrThrow({
-    where: { code },
-    orderBy: { createdAt: 'desc' },
-    include: { players: true, rounds: true },
-  });
+  const game = await findGameById(Number(id));
 
   if (game.finishedAt) {
     return res.status(400).json({ message: 'Game already finished' });
@@ -30,23 +25,11 @@ export default async function handler(
     return res.status(400).json({ message: 'Not enough players' });
   }
 
-  const questions = await prisma.question.findMany({
-    where: { language: game.language },
-  });
-  const randomQuestion = randomItemFromArray(questions);
-
-  const round = await prisma.round.create({
-    data: {
-      gameId: game.id,
-      number: 1,
-      questionId: randomQuestion.id,
-    },
-    include: { question: true },
-  });
+  const round = await createRound(game, 1);
 
   game.rounds = [round];
 
-  pusher.trigger(`game-${game.code}`, 'round-started', round);
+  pusher.trigger(`game-${game.code}`, 'round-started', game);
 
   res.status(200).json(game);
 }

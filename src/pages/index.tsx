@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import styles from '@/styles/Home.module.css';
-import Button from '../components/button/button';
+import Button from '../components/Button/Button';
 import { useState, MouseEventHandler } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router.js';
@@ -21,7 +21,6 @@ export default function Home() {
         name: name,
       })
       .then((res) => {
-        // res.data; => Context
         router.push(`/game/${res.data.code}`);
       })
       .catch((err) => {
