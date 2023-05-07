@@ -68,7 +68,6 @@ model Round {
 model Answer {
   id        Int      @id @default(autoincrement())
   value     String
-  isCorrect Boolean
   createdAt DateTime @default(now())
 
   question   Question @relation(fields: [questionId], references: [id])
