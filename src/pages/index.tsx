@@ -4,6 +4,7 @@ import Button from '../components/Button/Button';
 import { useState, MouseEventHandler } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router.js';
+import { sigmar } from '../app/fonts'
 
 export default function Home() {
   const router = useRouter();
@@ -53,27 +54,16 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className={styles.gamewrapper}>
-        <h1 className={styles.title}>Lying Game</h1>
-        <p className={styles.description}>Play with your friends!</p>
-        <Button
-          text="Create Game"
-          onclick={() => setShowCreateGameModal(true)}
-        />
-        <Button text="Join Game" onclick={() => setShowJoinGameModal(true)} />
-        <div className={styles.rules}>
-          <h2>Rules</h2>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
-            auctor, nisl eget ultricies ultricies, nunc nisl ultricies nunc, nec
-            ultricies nisl nisl eget nisl. Donec auctor, nisl eget ultricies
-            ultricies, nunc nisl ultricies nunc, nec ultricies nisl nisl eget
-            nisl.
-          </p>
+        <h1 className={styles.title + ' ' + sigmar.className}>Lying Game</h1>
+        <p className={styles.description}>Game where you can win by lying!</p>
+        <div className={styles['button-wrapper']}>
+          <Button text="Create Game" onclick={() => setShowCreateGameModal(true)} />
+          <Button text="Join Game" onclick={() => setShowJoinGameModal(true)} />
         </div>
         {showCreateGameModal === true ? (
           <div className={styles['create-game-modal']}>
-            <h2>Create Game</h2>
-            <form>
+            <h2>Create New Game</h2>
+            <form className={styles['create-game-form']}>
               <label htmlFor="name">Your Name</label>
               <input
                 type="text"
@@ -82,8 +72,8 @@ export default function Home() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
-              <Button text="Submit" onclick={handleCreateGameClick} />
             </form>
+            <Button text="Start Game" onclick={handleCreateGameClick} />
           </div>
         ) : null}
         {showJoinGameModal === true ? (

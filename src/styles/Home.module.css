@@ -1,40 +1,71 @@
 .gamewrapper {
-    background-color: #073B4C;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: repeat(3, auto);
-    margin: 20%;
-    row-gap: 2rem;
     position: relative;
+    top: 100%;
 }
 
 .title {
-    color: white;
-    font-size: 60px;
+    color: #F7B911;
+    font-size: 80px;
     grid-column-start: span 2;
     justify-self: center;
+    margin: 0;
+    line-height: 60px;
 }
 
 .description {
     color: white;
-    font-size: 20px;
+    font-size: 25px;
     grid-column-start: span 2;
     justify-self: center;
+    margin: 0;
+    margin-top: 1rem;
 }
 
-.rules {
-    color: white;
+.button-wrapper {
     grid-column-start: span 2;
-    width: 60%;
-    border: 3px solid white;
-    border-radius: 10px;
     justify-self: center;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 4rem;
 }
 
 .create-game-modal {
-    background-color: beige;
+    background-color: #F7B911;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: repeat(3, auto);
+    width: 450px;
+    height: 280px;
+    border-radius: 20px;
+    padding: 1rem 2rem; 
+    font-size: 25px;
     /* position: absolute; */
-    
+}
+
+.create-game-modal > h2 {
+    margin: 0;
+}
+
+.create-game-form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    font-size: 20px;
+}
+
+.create-game-form > input {
+    margin-bottom: 1rem;
+    height: 50px;
+    width: 300px;
+    border-radius: 10px;
+    border: none;
+    padding: 0 1rem;
+    font-size: 20px;
 }
 
 .join-game-modal {
