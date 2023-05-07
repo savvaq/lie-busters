@@ -1,10 +1,6 @@
 import Head from 'next/head';
 import styles from '@/styles/Home.module.css';
-<<<<<<< HEAD
 import Button from '../components/button/button';
-=======
-import Button from '../components/button/button.tsx';
->>>>>>> e95deaf5fe71e73f76117c5d27af8da8b11e9b22
 import { useState, MouseEventHandler } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/router.js';
