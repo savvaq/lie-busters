@@ -3,7 +3,6 @@ import { GameWithRelations } from '@/lib/types';
 type Stage = 'lobby' | 'question' | 'voting' | 'results' | 'gameover';
 
 const useStage = (game: GameWithRelations): Stage => {
-  console.log(game);
   if (!game.rounds || game.rounds.length === 0) {
     return 'lobby';
   }
