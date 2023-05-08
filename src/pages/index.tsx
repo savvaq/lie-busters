@@ -4,6 +4,7 @@ import Button from '../components/Button/Button';
 import { useState, MouseEventHandler } from 'react';
 import { useRouter } from 'next/router.js';
 import { sigmar } from '../app/fonts';
+import Modal from '../components/modal/modal';
 import { createGameApi, joinGameApi } from '@/lib/api';
 
 export default function Home() {
@@ -13,6 +14,18 @@ export default function Home() {
 
   const [name, setName] = useState('');
   const [code, setCode] = useState('');
+
+  const [gameWrapperStyle, setGameWrapperStyle] = useState(
+    styles['game-wrapper']
+  );
+
+  const blurGamewrapper = () => {
+    setGameWrapperStyle(styles['game-wrapper-blur']);
+  };
+
+  const unblurGamewrapper = () => {
+    setGameWrapperStyle(styles['game-wrapper']);
+  };
 
   const handleCreateGameClick: MouseEventHandler = (e) => {
     e.preventDefault();
@@ -38,55 +51,65 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className={styles.gamewrapper}>
+      <div className={gameWrapperStyle}>
         <h1 className={styles.title + ' ' + sigmar.className}>Lying Game</h1>
         <p className={styles.description}>Game where you can win by lying!</p>
         <div className={styles['button-wrapper']}>
           <Button
             text="Create Game"
-            onclick={() => setShowCreateGameModal(true)}
+            onclick={() => {
+              setShowCreateGameModal(true);
+              blurGamewrapper();
+            }}
           />
-          <Button text="Join Game" onclick={() => setShowJoinGameModal(true)} />
+          <Button
+            text="Join Game"
+            onclick={() => {
+              setShowJoinGameModal(true);
+              blurGamewrapper();
+            }}
+          />
         </div>
+      </div>
+      <div className={styles.modal}>
         {showCreateGameModal === true ? (
-          <div className={styles['create-game-modal']}>
-            <h2>Create New Game</h2>
-            <form className={styles['create-game-form']}>
-              <label htmlFor="name">Your Name</label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-            </form>
-            <Button text="Start Game" onclick={handleCreateGameClick} />
-          </div>
+          <Modal
+            handleClick={handleCreateGameClick}
+            title="Create New Game"
+            type="create"
+            onClose={() => setShowCreateGameModal(false)}
+            fields={[{ title: 'Your Name', name: 'name', id: 1 }]}
+            button="Start Game"
+            name={name}
+            setName={setName}
+            code={code}
+            setCode={setCode}
+            closeModal={() => {
+              setShowCreateGameModal(false);
+              unblurGamewrapper();
+            }}
+          />
         ) : null}
         {showJoinGameModal === true ? (
-          <div className={styles['join-game-modal']}>
-            <h2>Join Game</h2>
-            <form>
-              <label htmlFor="name">Your Name</label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-              <label htmlFor="code">Code</label>
-              <input
-                type="text"
-                id="code"
-                name="code"
-                value={code}
-                onChange={(e) => setCode(e.target.value)}
-              />
-              <Button text="Submit" onclick={handleJoinGameClick} />
-            </form>
-          </div>
+          <Modal
+            handleClick={handleJoinGameClick}
+            title="Join Game"
+            type="join"
+            onClose={() => setShowCreateGameModal(false)}
+            fields={[
+              { title: 'Your Name', name: 'name', id: 1 },
+              { title: 'Game Code', name: 'code', id: 2 },
+            ]}
+            button="Join Game"
+            name={name}
+            setName={setName}
+            code={code}
+            setCode={setCode}
+            closeModal={() => {
+              setShowJoinGameModal(false);
+              unblurGamewrapper();
+            }}
+          />
         ) : null}
       </div>
     </>
