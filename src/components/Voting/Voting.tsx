@@ -1,23 +1,31 @@
 import { GameWithRelations } from '@/lib/types';
-import { FC } from 'react';
+import { FC, useState } from 'react';
+import useOptions from './useOptions';
+import VoteCard from '../VoteCard/VoteCard';
 
 type VotingProps = {
   game: GameWithRelations;
 };
 
 const Voting: FC<VotingProps> = ({ game }) => {
-  const currentRound = game?.rounds?.[game?.rounds.length - 1];
+  const currentRound = game.rounds[game.rounds.length - 1];
+  const [selectedAnswerId, setSelectedAnswerId] = useState<number | null>();
+  const options = useOptions(currentRound);
 
-  return currentRound ? (
-    <div>
+  const vote = (answerId: number | null) => {
+    setSelectedAnswerId(answerId);
+  };
+
+  return (
+    <>
       Vote:
-      <ul>
-        {currentRound.answers.map((answer) => {
-          return <li key={answer.id}>{answer.value}</li>;
-        })}
-      </ul>
-    </div>
-  ) : null;
+      <div>
+        {options.map((option) => (
+          <VoteCard key={option.id} option={option} vote={vote} />
+        ))}
+      </div>
+    </>
+  );
 };
 
 export default Voting;

@@ -3,7 +3,8 @@ import styles from '@/styles/Home.module.css';
 import Button from '../components/Button/Button';
 import { useState, MouseEventHandler } from 'react';
 import { useRouter } from 'next/router.js';
-import { sigmar } from '../app/fonts'
+import { sigmar } from '../app/fonts';
+import { createGameApi, joinGameApi } from '@/lib/api';
 
 export default function Home() {
   const router = useRouter();
@@ -24,7 +25,7 @@ export default function Home() {
   const handleJoinGameClick: MouseEventHandler = (e) => {
     e.preventDefault();
 
-    joinGameApi(name, code).then((res) => {
+    joinGameApi(code, name).then((res) => {
       router.push(`/game/${res.data.code}`);
     });
   };
@@ -41,7 +42,10 @@ export default function Home() {
         <h1 className={styles.title + ' ' + sigmar.className}>Lying Game</h1>
         <p className={styles.description}>Game where you can win by lying!</p>
         <div className={styles['button-wrapper']}>
-          <Button text="Create Game" onclick={() => setShowCreateGameModal(true)} />
+          <Button
+            text="Create Game"
+            onclick={() => setShowCreateGameModal(true)}
+          />
           <Button text="Join Game" onclick={() => setShowJoinGameModal(true)} />
         </div>
         {showCreateGameModal === true ? (

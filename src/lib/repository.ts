@@ -10,7 +10,11 @@ export const findGameByCode = async (code: string) => {
       players: true,
       rounds: {
         orderBy: { startedAt: 'desc' },
-        include: { answers: true, votes: true, question: true },
+        include: {
+          answers: { include: { player: true } },
+          votes: true,
+          question: true,
+        },
       },
     },
   });
@@ -23,7 +27,11 @@ export const findGameById = async (id: number) => {
       players: true,
       rounds: {
         orderBy: { startedAt: 'desc' },
-        include: { answers: true, votes: true, question: true },
+        include: {
+          answers: { include: { player: true } },
+          votes: true,
+          question: true,
+        },
       },
     },
   });
@@ -68,7 +76,11 @@ export const createRound = async (game: Game, number: number) => {
       number,
       questionId: randomQuestion.id,
     },
-    include: { question: true, answers: true, votes: true },
+    include: {
+      question: true,
+      answers: { include: { player: true } },
+      votes: true,
+    },
   });
 };
 
@@ -106,7 +118,11 @@ export const updateRound = async (id: number, data: Partial<Round>) => {
   return prisma.round.update({
     where: { id },
     data,
-    include: { question: true, answers: true, votes: true },
+    include: {
+      question: true,
+      answers: { include: { player: true } },
+      votes: true,
+    },
   });
 };
 

@@ -28,3 +28,11 @@ export const saveAnswerApi = async (
 export const startVotingApi = async (gameId: number, roundId: number) => {
   return axios.post('/api/votes/start', { gameId, roundId });
 };
+
+export const voteApi = async (
+  gameId: number,
+  roundId: number,
+  answerId: number | null
+) => {
+  return axios.post('/api/votes/create', { answerId, gameId, roundId });
+};
