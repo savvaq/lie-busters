@@ -7,5 +7,5 @@ export const sigmar = Sigmar_One ({
 
 export const rubik = Rubik ({ 
     subsets: ['latin'], 
-    weight: '700', 
+    weight: ['400','700'], 
 });

@@ -5,7 +5,7 @@ import { rubik } from '../app/fonts';
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <main className={rubik.className}>
-      <Component {...pageProps} />;
+      <Component {...pageProps} />
     </main>
   )
 }
