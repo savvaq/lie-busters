@@ -1,0 +1,21 @@
+.card {
+  display: block;
+  position: relative;
+  background-color: white;
+  color: black;
+  padding: 10px;
+
+  &.selected {
+    background-color: #ccc;
+  }
+
+  &.correct {
+    background-color: #00a651;
+    color: white;
+  }
+
+  &.wrong {
+    background-color: #ee490e;
+    color: white;
+  }
+}

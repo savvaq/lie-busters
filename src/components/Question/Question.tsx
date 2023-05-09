@@ -1,8 +1,8 @@
 import { FC, useCallback, useState } from 'react';
 import { GameWithRelations } from '@/lib/types';
 import { saveAnswerApi, startVotingApi } from '@/lib/api';
-import useTimer from './useTimer';
-import useCountAnsweredPlayers from './useCountAnsweredPlayers';
+import useTimer from '../../hooks/useTimer';
+import useListenToAllPlayersAnsweredEvent from './useListenToAllPlayersAnsweredEvent';
 
 type QuestionProps = {
   game: GameWithRelations;
@@ -14,11 +14,20 @@ const Question: FC<QuestionProps> = ({ game, isHost }) => {
   const [isSaving, setIsSaving] = useState(false);
   const [isAnswered, setIsAnswered] = useState(false);
 
-  const currentRound = game?.rounds?.at(-1);
+  const currentRound = game.rounds[game.rounds.length - 1];
+  const deadtime = new Date(currentRound.startedAt);
+  deadtime.setSeconds(deadtime.getSeconds() + 50); // TODO: change to 30
+
+  const startVoting = useCallback(() => {
+    if (!isHost) return;
+
+    startVotingApi(game.id, currentRound.id);
+  }, [game, currentRound, isHost]);
+
+  const timeLeft = useTimer(deadtime, startVoting);
+  useListenToAllPlayersAnsweredEvent(game, startVoting);
 
   const submitAnswer = () => {
-    if (!currentRound) return;
-
     setIsSaving(true);
 
     saveAnswerApi(game.id, currentRound.id, value).then(() => {
@@ -27,20 +36,10 @@ const Question: FC<QuestionProps> = ({ game, isHost }) => {
     });
   };
 
-  const startVoting = useCallback(() => {
-    if (!currentRound || !isHost) return;
-
-    startVotingApi(game.id, currentRound.id);
-  }, [game, currentRound, isHost]);
-
-  const { timeLeft } = useTimer(startVoting);
-
-  useCountAnsweredPlayers(game, startVoting);
-
   return (
     <div>
       <p>Time left: {timeLeft}</p>
-      <p>{currentRound?.question.text}</p>
+      <p>{currentRound.question.text}</p>
 
       <input
         type="text"

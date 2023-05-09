@@ -1,0 +1,21 @@
+.button {
+  background-color: #ee490e;
+  color: white;
+  width: 180px;
+  height: 40px;
+  border: none;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 15px;
+  cursor: pointer;
+  justify-self: center;
+
+  &:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+  }
+}

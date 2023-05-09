@@ -38,7 +38,9 @@ export default async function handler(
 
   round.answers.push(answer);
 
-  pusher.trigger(`game-${game.code}`, 'player-answered', player);
+  if (round.answers.length === game.players.length) {
+    pusher.trigger(`game-${game.code}`, 'all-players-answered', game);
+  }
 
   res.status(200).json(game);
 }

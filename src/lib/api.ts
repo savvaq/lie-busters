@@ -36,3 +36,11 @@ export const voteApi = async (
 ) => {
   return axios.post('/api/votes/create', { answerId, gameId, roundId });
 };
+
+export const finishVotingApi = async (gameId: number, roundId: number) => {
+  return axios.post('/api/votes/finish', { gameId, roundId });
+};
+
+export const nextRoundApi = async (gameId: number) => {
+  return axios.post('/api/games/next-round', { gameId });
+};

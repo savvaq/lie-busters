@@ -24,9 +24,15 @@ export default async function handler(
   const question = round?.question;
   const answer = answerId ? await findAnswerById(answerId) : null;
   const currentPlayer = game.players.find((p) => p.id === playerId) as Player;
+  const playerHasVoted = round?.votes.some((v) => v.playerId === playerId);
   let score = currentPlayer.score;
 
-  if (!round || !question) {
+  if (
+    !round ||
+    round.finishedAt !== null ||
+    !question ||
+    playerHasVoted === true
+  ) {
     return res.status(400).json({ message: 'Invalid request' });
   }
 
@@ -40,7 +46,9 @@ export default async function handler(
     score += 2;
   }
 
-  await createVote(playerId, roundId, answerId);
+  const vote = await createVote(playerId, roundId, answerId);
+  round.votes.push(vote);
+
   await updatePlayer(playerId, { score });
 
   if (answer) {
@@ -53,10 +61,12 @@ export default async function handler(
       });
   }
 
-  pusher.trigger(`game-${game.code}`, 'player-voted', playerId);
-
   // Reload game from database to get updated data
   game = await findGameById(gameId);
+
+  if (round.votes.length === game.players.length) {
+    pusher.trigger(`game-${game.code}`, 'all-players-voted', game);
+  }
 
   res.status(200).json(game);
 }
