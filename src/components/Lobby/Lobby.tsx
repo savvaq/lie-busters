@@ -5,6 +5,7 @@ import { startGameApi } from '@/lib/api';
 import styles from './Lobby.module.css';
 import { sigmar } from '../../app/fonts';
 import Button from '../Button/Button';
+import { useState } from 'react';
 
 type LobbyProps = {
   game: GameWithRelations;
@@ -14,6 +15,15 @@ type LobbyProps = {
 const Lobby: FC<LobbyProps> = ({ game, isHost }) => {
   const startGame = () => {
     startGameApi(game.id);
+  };
+
+  const [tooltip, setTooltip] = useState(false);
+
+  const showTooltip = () => {
+    setTooltip(true);
+    setTimeout(() => {
+      setTooltip(false);
+    }, 2000);
   };
 
   return (
@@ -39,7 +49,7 @@ const Lobby: FC<LobbyProps> = ({ game, isHost }) => {
         <Button
           text="Start Game"
           onclick={startGame}
-          disabled={game.players.length < 2}
+          disabled={!game.players || game.players.length < 2}
         />
       )}
     </div>
