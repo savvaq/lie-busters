@@ -1,27 +1,23 @@
 import { GameWithRelations } from '@/lib/types';
 
-type Stage = 'lobby' | 'question' | 'voting' | 'results' | 'gameover';
+type Stage = 'lobby' | 'question' | 'voting' | 'gameover';
 
 const useStage = (game: GameWithRelations): Stage => {
-  if (!game.rounds || game.rounds.length === 0) {
+  if (game.rounds.length === 0) {
     return 'lobby';
   }
 
-  const currentRound = game.rounds[game.rounds.length - 1];
-
-  if (game.rounds.length === 5 && currentRound.finishedAt) {
+  if (game.finishedAt !== null) {
     return 'gameover';
   }
+
+  const currentRound = game.rounds[game.rounds.length - 1];
 
   if (currentRound.startedAt && !currentRound.votesStartedAt) {
     return 'question';
   }
 
-  if (currentRound.votesStartedAt && !currentRound.finishedAt) {
-    return 'voting';
-  }
-
-  return 'results';
+  return 'voting';
 };
 
 export default useStage;

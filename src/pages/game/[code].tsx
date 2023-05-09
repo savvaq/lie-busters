@@ -1,15 +1,22 @@
 import React, { FC, useState } from 'react';
 import { GetServerSidePropsContext } from 'next';
+import dynamic from 'next/dynamic';
 import { getCookie } from 'cookies-next';
 import { GameWithRelations } from '@/lib/types';
 import Lobby from '@/components/Lobby/Lobby';
 import useListenToPusherEvents from '@/hooks/useListenToPusherEvents';
 import useStage from '@/hooks/useStage';
 import { Player } from '@prisma/client';
-import Question from '@/components/Question/Question';
-import Voting from '@/components/Voting/Voting';
-import { startGameApi } from '@/lib/api';
 import { findGameByCode } from '@/lib/repository';
+import Scoreboard from '@/components/Scoreboard/Scoreboard';
+
+// Need to import these dynamically to avoid timers errors
+const Question = dynamic(() => import('@/components/Question/Question'), {
+  ssr: false,
+});
+const Voting = dynamic(() => import('@/components/Voting/Voting'), {
+  ssr: false,
+});
 
 type GameProps = {
   game: GameWithRelations;
@@ -35,15 +42,15 @@ const Game: FC<GameProps> = (props) => {
 
   useListenToPusherEvents(game.code, setGame);
 
-  const startGame = () => startGameApi(game.id);
-
   switch (stage) {
     case 'lobby':
-      return <Lobby game={game} isHost={isHost} startGame={startGame} />;
+      return <Lobby game={game} isHost={isHost} />;
     case 'question':
       return <Question game={game} isHost={isHost} />;
     case 'voting':
-      return <Voting game={game} />;
+      return <Voting game={game} currentPlayer={props.player} />;
+    case 'gameover':
+      return <Scoreboard game={game} />;
     default:
       return <div>Something went wrong</div>;
   }

@@ -97,6 +97,7 @@ export const createAnswer = async (
       roundId,
       value,
     },
+    include: { player: true },
   });
 };
 
@@ -130,5 +131,23 @@ export const updatePlayer = async (id: number, data: Partial<Player>) => {
   return prisma.player.update({
     where: { id },
     data,
+  });
+};
+
+export const updateGame = async (id: number, data: Partial<Game>) => {
+  return prisma.game.update({
+    where: { id },
+    data,
+    include: {
+      players: true,
+      rounds: {
+        orderBy: { startedAt: 'desc' },
+        include: {
+          answers: { include: { player: true } },
+          votes: true,
+          question: true,
+        },
+      },
+    },
   });
 };

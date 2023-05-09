@@ -1,4 +1,4 @@
-import { Answer, Game, Player, Question, Round } from '@prisma/client';
+import { Answer, Game, Player, Question, Round, Vote } from '@prisma/client';
 
 export type ResponseError = {
   message: string;
@@ -11,6 +11,7 @@ export type AnswerWithRelations = Answer & {
 export type RoundWithRelations = Round & {
   question: Question;
   answers: AnswerWithRelations[];
+  votes: Vote[];
 };
 
 export type GameWithRelations = Game & {
