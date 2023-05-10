@@ -8,7 +8,7 @@
   height: fit-content;
   margin: auto;
   max-width: 1000px;
-  row-gap: 3rem;
+  row-gap: 5rem;
 }
 
 .title {
@@ -40,9 +40,9 @@
   border-radius: 10px;
   color: white;
   font-size: 50px;
-  height: 100px;
+  height: 80px;
   text-align: center;
-  line-height: 100px;
+  line-height: 80px;
   cursor: pointer;
   position: relative;
 }
@@ -80,8 +80,7 @@
 
 .players-wrapper {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 200px));
   row-gap: 2rem;
 }
 

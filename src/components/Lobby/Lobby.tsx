@@ -28,7 +28,7 @@ const Lobby: FC<LobbyProps> = ({ game, isHost }) => {
 
   return (
     <div className={styles['lobby-wrapper']}>
-      <h1 className={styles.title + ' ' + sigmar.className}>Lying Game</h1>
+      <h1 className={styles.title + ' ' + sigmar.className}>Lie Busters</h1>
       <div className={styles['game-code-wrapper']}>
         <p className={styles['game-code-text']}>Game Code</p>
         <div
