@@ -25,6 +25,7 @@ model Player {
   name   String
   score  Int     @default(0)
   isHost Boolean @default(false)
+  avatar String?
 
   gameId Int
   game   Game @relation(fields: [gameId], references: [id], onDelete: Cascade)

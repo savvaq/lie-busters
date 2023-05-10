@@ -18,7 +18,9 @@ export default async function handler(
   }
 
   const game = await createGame();
-  const player = await createPlayer(game.id, response.data.name, true);
+
+  const avatar = Math.floor(Math.random() * 10) + '.png';
+  const player = await createPlayer(game.id, response.data.name, true, avatar);
 
   setCookie('playerId', String(player.id), {
     res,

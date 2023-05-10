@@ -53,10 +53,11 @@ export const createGame = async () => {
 export const createPlayer = async (
   gameId: number,
   name: string,
-  isHost: boolean
+  isHost: boolean,
+  avatar: string
 ) => {
   return prisma.player.create({
-    data: { name, gameId, isHost },
+    data: { name, gameId, isHost, avatar },
   });
 };
 

@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Player } from '@prisma/client';
 import { GameWithRelations } from '@/lib/types';
 import { startGameApi } from '@/lib/api';
-import styles from './Lobby.module.css';
+import styles from './Lobby.module.scss';
 import { sigmar } from '../../app/fonts';
 import Button from '../Button/Button';
 import { useState } from 'react';
@@ -48,7 +48,9 @@ const Lobby: FC<LobbyProps> = ({ game, isHost }) => {
       <div className={styles['players-wrapper']}>
         {game.players.map((player: Player) => (
           <div key={player.id} className={styles['player-wrapper']}>
-            <div className={styles['player-icon']}></div>
+            <div className={styles['player-icon']}>
+              <img src={`/avatars/${player.avatar}`} alt={player.name} />
+            </div>
             <div className={styles['player-name-wrapper']}>
               <p className={styles['player-name-text']}>{player.name}</p>
             </div>

@@ -6,6 +6,7 @@ import pusher from '@/lib/pusher';
 import { ResponseError } from '@/lib/types';
 import { setCookie } from 'cookies-next';
 import { createPlayer, findGameByCode } from '@/lib/repository';
+import randomItemFromArray from '@/helpers/randomItemFromArray';
 
 export default async function handler(
   req: NextApiRequest,
@@ -39,7 +40,21 @@ export default async function handler(
     return res.status(400).json({ message: 'Name already taken' });
   }
 
-  const player = await createPlayer(game.id, response.data.name, false);
+  const usedAvatars = game.players.map((player) => player.avatar);
+  const avatars = [];
+
+  for (let i = 1; i <= 10; i++) {
+    if (!usedAvatars.includes(`${i}.png`)) {
+      avatars.push(`${i}.png`);
+    }
+  }
+
+  const player = await createPlayer(
+    game.id,
+    response.data.name,
+    false,
+    randomItemFromArray(avatars)
+  );
 
   setCookie('playerId', String(player.id), {
     res,
