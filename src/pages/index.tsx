@@ -52,7 +52,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className={gameWrapperStyle}>
-        <h1 className={styles.title + ' ' + sigmar.className}>Lying Game</h1>
+        <h1 className={styles.title + ' ' + sigmar.className}>Lie Busters</h1>
         <p className={styles.description}>Game where you can win by lying!</p>
         <div className={styles['button-wrapper']}>
           <Button
