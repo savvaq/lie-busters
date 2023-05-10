@@ -29,9 +29,19 @@ const Lobby: FC<LobbyProps> = ({ game, isHost }) => {
   return (
     <div className={styles['lobby-wrapper']}>
       <h1 className={styles.title + ' ' + sigmar.className}>Lying Game</h1>
-      <h2 className={styles.description}>
-        Waiting for host to start the game...
-      </h2>
+      <div className={styles['game-code-wrapper']}>
+        <p className={styles['game-code-text']}>Game Code</p>
+        <div
+          onClick={() => {
+            navigator.clipboard.writeText(game.code);
+            showTooltip();
+          }}
+          className={styles['game-code-number']}
+        >
+          {game.code}
+          {tooltip && <div className={styles['tooltip']}>Copied!</div>}
+        </div>
+      </div>
       <h2 className={styles['players-header'] + ' ' + sigmar.className}>
         Players
       </h2>
@@ -45,12 +55,16 @@ const Lobby: FC<LobbyProps> = ({ game, isHost }) => {
           </div>
         ))}
       </div>
-      {isHost && (
+      {isHost ? (
         <Button
           text="Start Game"
           onclick={startGame}
           disabled={!game.players || game.players.length < 2}
         />
+      ) : (
+        <h2 className={styles.description}>
+          Waiting for host to start the game...
+        </h2>
       )}
     </div>
   );

@@ -4,7 +4,7 @@ import Button from '../components/Button/Button';
 import { useState, MouseEventHandler } from 'react';
 import { useRouter } from 'next/router.js';
 import { sigmar } from '../app/fonts';
-import Modal from '../components/modal/modal';
+import Modal from '../components/Modal/Modal';
 import { createGameApi, joinGameApi } from '@/lib/api';
 
 export default function Home() {
