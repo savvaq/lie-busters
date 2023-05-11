@@ -7,6 +7,9 @@ import { finishVotingApi, nextRoundApi, voteApi } from '@/lib/api';
 import useListenToAllPlayersVotedEvent from './useListenToAllPlayersVotedEvent';
 import Button from '../Button/Button';
 import { Player } from '@prisma/client';
+import styles from './Voting.module.scss';
+import { sigmar } from '@/app/fonts';
+import Timer from '../Timer/Timer';
 
 type VotingProps = {
   game: GameWithRelations;
@@ -54,31 +57,37 @@ const Voting: FC<VotingProps> = ({ game, currentPlayer }) => {
 
   return (
     <>
-      {!currentRound.finishedAt && <p>Time left: {timeLeft}</p>}
-      Vote:
-      <div>
-        {options.map((option) => (
-          <VoteCard
-            key={option.id}
-            option={option}
-            vote={() => vote(option.id)}
-            showResults={currentRound.finishedAt !== null}
-            votesCount={votesCountForOption(option.id)}
-            isCorrect={
-              option.value.toLowerCase() ===
-              question.correctAnswer.toLowerCase()
-            }
-            isSelected={option.id === selectedAnswerId}
-            disabled={optionIsDisabled(option)}
+      <div className={styles['voting-wrapper']}>
+        <Timer timeLeft={timeLeft} />
+        <h1 className={styles.title + ' ' + sigmar.className}>Round {game.rounds.length}</h1>
+        <h2 className={styles.question}>{currentRound.question.text}</h2>
+        <div className={styles['answers-block-wrapper']}>
+          <p className={styles['sub-header']}>Select your answer: </p>
+          <div className={styles['answers-wrapper']}>
+            {options.map((option) => (
+              <VoteCard
+                key={option.id}
+                option={option}
+                vote={() => vote(option.id)}
+                showResults={currentRound.finishedAt !== null}
+                votesCount={votesCountForOption(option.id)}
+                isCorrect={
+                  option.value.toLowerCase() ===
+                  question.correctAnswer.toLowerCase()
+                }
+                isSelected={option.id === selectedAnswerId}
+                disabled={optionIsDisabled(option)}
+              />
+            ))}
+          </div>
+        </div>
+        {currentRound.finishedAt && currentPlayer.isHost && (
+          <Button
+            onClick={nextRound}
+            text={game.rounds.length === 2 ? 'Show results' : 'Next round'}
           />
-        ))}
+        )}
       </div>
-      {currentRound.finishedAt && currentPlayer.isHost && (
-        <Button
-          onClick={nextRound}
-          text={game.rounds.length === 2 ? 'Show results' : 'Next round'}
-        />
-      )}
     </>
   );
 };

@@ -1,12 +1,23 @@
 .card {
-  display: block;
-  position: relative;
-  background-color: white;
+  background-color: #f7b911;
   color: black;
-  padding: 10px;
+  width: 15rem;
+  height: 10rem;
+  border-radius: 10px;
+  justify-self: center;
+  
+  .card-content-wrapper {    
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    grid-template-rows: 1fr 1fr 1fr;
+    // margin: 1rem;
+    height: 100%;
+    width: 100%;
+  }
 
   &.selected {
-    background-color: #ccc;
+    border: 3px solid black;
   }
 
   &.correct {
@@ -18,4 +29,27 @@
     background-color: #ee490e;
     color: white;
   }
+  
+  .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    grid-row: 1;
+    align-self: self-end;
+  }
+  
+  .answer {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+    grid-row: 2;
+  }
+
+  .votes {
+    font-size: 0.8rem;
+    margin: 0;
+    grid-row: 3;
+  }
+
 }
+

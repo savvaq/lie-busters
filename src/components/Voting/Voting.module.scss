@@ -1,0 +1,39 @@
+.voting-wrapper {
+    display: grid;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    max-width: 1000px;
+    height: fit-content;
+    row-gap: 6rem;
+}
+
+.title {
+    color: #f7b911;
+    font-size: 80px;
+    margin: 0;
+    line-height: 80px;
+    justify-self: center;
+}
+
+.question {
+    color: white;
+    font-size: 40px;
+    font-weight: 400;
+    margin: 0;
+}
+
+.sub-header {
+    color: #f7b911;
+    font-size: 1.3em;
+    margin: 1rem;
+}
+
+.answers-wrapper { 
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    row-gap: 3rem;
+}

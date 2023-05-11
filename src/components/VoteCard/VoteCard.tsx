@@ -30,18 +30,17 @@ const VoteCard: FC<VoteCardProps> = ({
         [styles.incorrect]: showResults && !isCorrect,
       })}
     >
-      <button type="button" onClick={vote} disabled={disabled}>
-        {option.value}
-      </button>
-
-      {showResults && (
-        <div>
-          Answer given by:{' '}
-          {option.players.map((option) => option.name).join(', ')}
-          <br />
-          Votes received: {votesCount}
-        </div>
-      )}
+      <div className={styles['card-content-wrapper']}>
+        { 
+          option.players.map((player) => (
+              <img className={styles.avatar} key={player.id} src={`/avatars/${player.avatar}`} alt="avatar-img" />
+          ))
+        }
+        <p className={styles.answer}>{option.value}</p>
+        {showResults && (
+          <p className={styles.votes}>Votes: {votesCount}</p>
+        )}
+      </div>
     </div>
   );
 };
