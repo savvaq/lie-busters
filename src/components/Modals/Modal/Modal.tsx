@@ -1,5 +1,5 @@
 import { FC, PropsWithChildren } from 'react';
-import styles from './Modal.module.css';
+import styles from './Modal.module.scss';
 
 type ModalProps = {
   title: string;

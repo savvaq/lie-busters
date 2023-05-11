@@ -5,7 +5,7 @@ import { uid } from 'uid';
 
 export const findGameByCode = async (code: string) => {
   return await prisma.game.findFirstOrThrow({
-    where: { code },
+    where: { code, finishedAt: null },
     include: {
       players: true,
       rounds: {

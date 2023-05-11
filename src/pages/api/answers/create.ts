@@ -9,15 +9,15 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Game | ResponseError>
 ) {
-  const gameId = req.body.gameId as string;
-  const roundId = req.body.roundId as string;
+  const gameId = req.body.gameId as number;
+  const roundId = req.body.roundId as number;
   const value = (req.body.value as string).trim();
   const playerId = getCookie('playerId', { req });
 
-  const game = await findGameById(Number(gameId));
+  const game = await findGameById(gameId);
 
   const player = game.players.find((player) => player.id === Number(playerId));
-  const round = game.rounds.find((round) => round.id === Number(roundId));
+  const round = game.rounds.find((round) => round.id === roundId);
 
   if (!player || !round) {
     return res.status(400).json({ message: 'Invalid request' });

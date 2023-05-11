@@ -25,9 +25,9 @@ export default function Home() {
         <div className={styles['button-wrapper']}>
           <Button
             text="Create Game"
-            onclick={() => setShowCreateGameModal(true)}
+            onClick={() => setShowCreateGameModal(true)}
           />
-          <Button text="Join Game" onclick={() => setShowJoinGameModal(true)} />
+          <Button text="Join Game" onClick={() => setShowJoinGameModal(true)} />
         </div>
       </div>
       <div className={styles.modal}>
