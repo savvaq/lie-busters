@@ -2,7 +2,9 @@ import axios from 'axios';
 import { GameWithRelations } from './types';
 
 export const createGameApi = async (name: string) => {
-  return axios.post<GameWithRelations>('/api/games/create', { name });
+  return axios.post<GameWithRelations>('/api/games/create', {
+    name,
+  });
 };
 
 export const joinGameApi = async (code: string, name: string) => {
@@ -10,7 +12,7 @@ export const joinGameApi = async (code: string, name: string) => {
 };
 
 export const startGameApi = async (gameId: number) => {
-  return axios.post('/api/games/start', { id: gameId });
+  return axios.post('/api/games/start', { gameId });
 };
 
 export const saveAnswerApi = async (

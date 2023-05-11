@@ -9,9 +9,9 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Game | ResponseError>
 ) {
-  const id = req.body.id as string;
+  const gameId = req.body.gameId as number;
 
-  const game = await findGameById(Number(id));
+  const game = await findGameById(gameId);
 
   if (game.finishedAt) {
     return res.status(400).json({ message: 'Game already finished' });

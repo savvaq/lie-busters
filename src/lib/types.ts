@@ -2,6 +2,8 @@ import { Answer, Game, Player, Question, Round, Vote } from '@prisma/client';
 
 export type ResponseError = {
   message: string;
+  formErrors?: string[];
+  fieldErrors?: { [key: string]: string[] | undefined };
 };
 
 export type AnswerWithRelations = Answer & {
