@@ -36,11 +36,9 @@ const CreateGameModal: FC<CreateGameModalProps> = ({ isOpen, onClose }) => {
   return (
     <Modal title="Create Game" isOpen={isOpen} onClose={onClose}>
       <form onSubmit={handleSubmit(onSubmit)} className={styles['modal-form']}>
-        <fieldset>
-          <label htmlFor="name">Your Name</label>
-          <input {...register('name')} />
-          <span>{errors?.name?.message || ''}</span>
-        </fieldset>
+        <label htmlFor="name">Your Name</label>
+        <input {...register('name')} />
+        <span>{errors?.name?.message || ''}</span>
 
         <Button text="Create Game" type="submit" />
       </form>

@@ -51,17 +51,13 @@ const JoinGameModal: FC<JoinGameModalProps> = ({ isOpen, onClose }) => {
   return (
     <Modal title="Join Game" isOpen={isOpen} onClose={onClose}>
       <form className={styles['modal-form']} onSubmit={handleSubmit(onSubmit)}>
-        <fieldset>
-          <label htmlFor="name">Your Name</label>
-          <input {...register('name')} />
-          <span>{errors?.name?.message}</span>
-        </fieldset>
+        <label htmlFor="name">Your Name</label>
+        <input {...register('name')} />
+        <span>{errors?.name?.message}</span>
 
-        <fieldset>
-          <label htmlFor="code">Game Code</label>
-          <input {...register('code')} />
-          <span>{errors?.code?.message}</span>
-        </fieldset>
+        <label htmlFor="code">Game Code</label>
+        <input {...register('code')} />
+        <span>{errors?.code?.message}</span>
 
         <Button text="Join Game" type="submit" />
       </form>
