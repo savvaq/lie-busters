@@ -13,6 +13,7 @@ export default async function handler(
 
   let game = await findGameById(gameId);
 
+  // TODO: change rounds number
   if (game.rounds.length === 2) {
     game = await updateGame(gameId, { finishedAt: new Date() });
     pusher.trigger(`game-${game.code}`, 'game-finished', game);

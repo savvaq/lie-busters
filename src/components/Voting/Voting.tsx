@@ -75,7 +75,7 @@ const Voting: FC<VotingProps> = ({ game, currentPlayer }) => {
       </div>
       {currentRound.finishedAt && currentPlayer.isHost && (
         <Button
-          onclick={nextRound}
+          onClick={nextRound}
           text={game.rounds.length === 2 ? 'Show results' : 'Next round'}
         />
       )}

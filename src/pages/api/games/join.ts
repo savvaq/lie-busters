@@ -1,35 +1,36 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { z } from 'zod';
+import { ZodError, ZodIssueCode } from 'zod';
 import { Game } from '@prisma/client';
 import pusher from '@/lib/pusher';
 import { ResponseError } from '@/lib/types';
-import { setCookie } from 'cookies-next';
+import { getCookie, setCookie } from 'cookies-next';
 import { createPlayer, findGameByCode } from '@/lib/repository';
 import randomItemFromArray from '@/helpers/randomItemFromArray';
+import { JoinGameSchema } from '@/lib/schemas';
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Game | ResponseError>
 ) {
-  const schema = z.object({
-    code: z.string(),
-    name: z.string().min(2).max(20),
-  });
-  const response = schema.safeParse(req.body);
+  const response = JoinGameSchema.safeParse(req.body);
 
   if (!response.success) {
-    return res.status(400).json({ message: 'Invalid request' });
+    return res
+      .status(400)
+      .json({ message: 'Invalid request', ...response.error.flatten() });
   }
 
   const game = await findGameByCode(response.data.code);
 
-  if (game.finishedAt) {
-    return res.status(400).json({ message: 'Game already finished' });
-  }
-
   if (game.startedAt) {
     return res.status(400).json({ message: 'Game already started' });
+  }
+
+  const playerExists = game.players.find(
+    (player) => player.id === Number(getCookie('playerId', { req }))
+  );
+  if (playerExists) {
+    res.status(200).json(game);
   }
 
   if (game.players.length >= 10) {
@@ -37,7 +38,17 @@ export default async function handler(
   }
 
   if (game.players.some((player) => player.name === response.data.name)) {
-    return res.status(400).json({ message: 'Name already taken' });
+    const error = new ZodError([
+      {
+        code: ZodIssueCode.custom,
+        path: ['name'],
+        message: 'Name already taken',
+      },
+    ]);
+
+    return res
+      .status(400)
+      .json({ message: 'Invalid request', ...error.flatten() });
   }
 
   const usedAvatars = game.players.map((player) => player.avatar);

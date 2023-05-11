@@ -1,0 +1,94 @@
+.blur {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  backdrop-filter: blur(4px);
+}
+
+.modal {
+  background-color: #f7b911;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: repeat(3, auto);
+  width: 360px;
+  height: fit-content;
+  border-radius: 20px;
+  padding: 2rem;
+  font-size: 20px;
+  align-items: center;
+  row-gap: 1rem;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  z-index: 100;
+}
+
+.modal > h2 {
+  margin: 0;
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  font-size: 15px;
+  margin: 0;
+
+  label {
+    display: block;
+    width: 100%;
+    margin-top: 1rem 0 0.5rem 0;
+  }
+
+  input {
+    height: 40px;
+    width: 100%;
+    border-radius: 10px;
+    border: none;
+    padding: 0 1rem;
+    margin-bottom: 2px;
+    font-size: 15px;
+  }
+
+  span {
+    color: red;
+    font-size: 12px;
+    margin-bottom: 1rem;
+  }
+}
+
+.close-modal {
+  position: absolute;
+  right: 13%;
+  top: 5%;
+  opacity: 0.3;
+}
+
+.close-modal:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.close-modal:before,
+.close-modal:after {
+  position: absolute;
+  left: 15px;
+  content: ' ';
+  height: 25px;
+  width: 2px;
+  background-color: #333;
+}
+
+.close-modal:before {
+  transform: rotate(45deg);
+}
+
+.close-modal:after {
+  transform: rotate(-45deg);
+}
