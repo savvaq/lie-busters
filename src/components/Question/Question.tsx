@@ -6,6 +6,7 @@ import useListenToAllPlayersAnsweredEvent from './useListenToAllPlayersAnsweredE
 import styles from './Question.module.css';
 import { sigmar } from '@/app/fonts';
 import Button from '../Button/Button';
+import Timer from '../Timer/Timer';
 
 type QuestionProps = {
   game: GameWithRelations;
@@ -42,26 +43,31 @@ const Question: FC<QuestionProps> = ({ game, isHost }) => {
   return (
     <>
       <div className={styles['question-wrapper']}>
+        <Timer timeLeft={timeLeft} />
         <h1 className={styles.title + ' ' + sigmar.className}>Round {game.rounds.length}</h1>
         <h2 className={styles.question}>{currentRound.question.text}</h2>
+        
+        { !isAnswered ?
+          <input
+            type="text"
+            value={value}
+            className={styles.input}
+            placeholder="Type your lie here..."
+            onChange={(e) => setValue(e.target.value)}
+          />
+          :
+          <div className={styles.answer}>{value}</div>
+        }
 
-        <input
-          type="text"
-          value={value}
-          className={styles.input}
-          placeholder="Type your lie here..."
-          onChange={(e) => setValue(e.target.value)}
-        />
-
-        {!isAnswered && (
+        {!isAnswered ?
           <Button
           text="Submit"
-          onclick={submitAnswer}
-          disabled={!game.players || game.players.length < 2}
+          onClick={submitAnswer}
           />
-          )}
+          : 
+          <h1 className={styles.description}>Waiting for other players...</h1>
+        }
       </div>
-      <div className={styles.timer}>{timeLeft}</div>
     </>
   );
 };
