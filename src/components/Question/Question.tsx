@@ -19,7 +19,7 @@ const Question: FC<QuestionProps> = ({ game, isHost }) => {
 
   const currentRound = game.rounds[game.rounds.length - 1];
   const deadtime = new Date(currentRound.startedAt);
-  deadtime.setSeconds(deadtime.getSeconds() + 2000); // TODO: change to 30
+  deadtime.setSeconds(deadtime.getSeconds() + 25); // TODO: change to 30
 
   const startVoting = useCallback(() => {
     if (!isHost) return;
@@ -57,7 +57,6 @@ const Question: FC<QuestionProps> = ({ game, isHost }) => {
           <Button
           text="Submit"
           onclick={submitAnswer}
-          disabled={!game.players || game.players.length < 2}
           />
           )}
       </div>

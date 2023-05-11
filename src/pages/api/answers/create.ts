@@ -13,7 +13,7 @@ export default async function handler(
   const roundId = req.body.roundId as string;
   const value = (req.body.value as string).trim();
   const playerId = getCookie('playerId', { req });
-
+  
   const game = await findGameById(Number(gameId));
 
   const player = game.players.find((player) => player.id === Number(playerId));
