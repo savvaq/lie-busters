@@ -8,12 +8,12 @@
     right: 0;
     max-width: 1000px;
     height: fit-content;
-    row-gap: 8rem;
+    row-gap: 6rem;
 }
 
 .question {
     color: white;
-    font-size: 70px;
+    font-size: 60px;
     font-weight: 400;
     margin: 0;
 }
@@ -34,7 +34,26 @@
     border: none;
     outline: none;
     background: transparent;
-    font-size: 70px;
+    font-size: 60px;
     font-weight: 400;
     border-bottom: 1px solid #f7b911;
+}
+
+.answer {
+    width: 50%;
+    color: #f7b911;
+    justify-self: center;
+    height: 100%;
+    border: 1px solid #f7b911;
+    font-size: 60px;
+    font-weight: 400;
+    text-align: center;
+}
+
+.description {
+    color: white;
+    font-size: 30px;
+    font-weight: 400;
+    margin: 0;
+    justify-self: center;
 }
