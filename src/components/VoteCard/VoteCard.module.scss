@@ -5,8 +5,9 @@
   height: 10rem;
   border-radius: 10px;
   justify-self: center;
-  
-  .card-content-wrapper {    
+  cursor: pointer;
+
+  .card-content-wrapper {
     display: grid;
     justify-items: center;
     align-items: center;
@@ -29,7 +30,12 @@
     background-color: #ee490e;
     color: white;
   }
-  
+
+  &.inactive {
+    pointer-events: none;
+    cursor: default;
+  }
+
   .avatar {
     width: 40px;
     height: 40px;
@@ -37,7 +43,7 @@
     grid-row: 1;
     align-self: self-end;
   }
-  
+
   .answer {
     font-size: 1.5rem;
     font-weight: 600;
@@ -50,6 +56,4 @@
     margin: 0;
     grid-row: 3;
   }
-
 }
-

@@ -32,6 +32,8 @@ const Question: FC<QuestionProps> = ({ game, isHost }) => {
   useListenToAllPlayersAnsweredEvent(game, startVoting);
 
   const submitAnswer = () => {
+    if (isAnswered || isSaving) return;
+
     setIsSaving(true);
 
     saveAnswerApi(game.id, currentRound.id, value).then(() => {
@@ -44,10 +46,12 @@ const Question: FC<QuestionProps> = ({ game, isHost }) => {
     <>
       <div className={styles['question-wrapper']}>
         <Timer timeLeft={timeLeft} />
-        <h1 className={styles.title + ' ' + sigmar.className}>Round {game.rounds.length}</h1>
+        <h1 className={styles.title + ' ' + sigmar.className}>
+          Round {game.rounds.length}
+        </h1>
         <h2 className={styles.question}>{currentRound.question.text}</h2>
-        
-        { !isAnswered ?
+
+        {!isAnswered ? (
           <input
             type="text"
             value={value}
@@ -55,18 +59,15 @@ const Question: FC<QuestionProps> = ({ game, isHost }) => {
             placeholder="Type your lie here..."
             onChange={(e) => setValue(e.target.value)}
           />
-          :
+        ) : (
           <div className={styles.answer}>{value}</div>
-        }
+        )}
 
-        {!isAnswered ?
-          <Button
-          text="Submit"
-          onClick={submitAnswer}
-          />
-          : 
+        {!isAnswered ? (
+          <Button text="Submit" onClick={submitAnswer} />
+        ) : (
           <h1 className={styles.description}>Waiting for other players...</h1>
-        }
+        )}
       </div>
     </>
   );

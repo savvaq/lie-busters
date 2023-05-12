@@ -51,6 +51,8 @@ const Voting: FC<VotingProps> = ({ game, currentPlayer }) => {
   };
 
   const vote = (answerId: number | null) => {
+    if (selectedAnswerId) return;
+
     setSelectedAnswerId(answerId);
     voteApi(game.id, currentRound.id, answerId);
   };
@@ -59,10 +61,16 @@ const Voting: FC<VotingProps> = ({ game, currentPlayer }) => {
     <>
       <div className={styles['voting-wrapper']}>
         <Timer timeLeft={timeLeft} />
-        <h1 className={styles.title + ' ' + sigmar.className}>Round {game.rounds.length}</h1>
+        <h1 className={styles.title + ' ' + sigmar.className}>
+          Round {game.rounds.length}
+        </h1>
         <h2 className={styles.question}>{currentRound.question.text}</h2>
         <div className={styles['answers-block-wrapper']}>
-          <p className={styles['sub-header']}>Select your answer: </p>
+          <p className={styles['sub-header']}>
+            {currentRound.finishedAt !== null
+              ? 'Results:'
+              : 'Choose the correct answer:'}
+          </p>
           <div className={styles['answers-wrapper']}>
             {options.map((option) => (
               <VoteCard

@@ -9,6 +9,7 @@ import useStage from '@/hooks/useStage';
 import { Player } from '@prisma/client';
 import { findGameByCode } from '@/lib/repository';
 import Scoreboard from '@/components/Scoreboard/Scoreboard';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 // Need to import these dynamically to avoid timers errors
 const Question = dynamic(() => import('@/components/Question/Question'), {
@@ -32,7 +33,13 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       player.id === Number(getCookie('playerId', { req: context.req }))
   );
 
-  return { props: { game: JSON.parse(JSON.stringify(game)), player } };
+  return {
+    props: {
+      game: JSON.parse(JSON.stringify(game)),
+      player,
+      ...(await serverSideTranslations(context.locale, ['common'])),
+    },
+  };
 }
 
 const Game: FC<GameProps> = (props) => {

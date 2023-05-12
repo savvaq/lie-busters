@@ -4,7 +4,7 @@ import { GameWithRelations } from '@/lib/types';
 import { startGameApi } from '@/lib/api';
 import styles from './Lobby.module.scss';
 import { sigmar } from '../../app/fonts';
-import Button from '../Button/Button';
+import Button from '@/components/Button/Button';
 import { useState } from 'react';
 import { useTranslation } from 'next-i18next';
 
@@ -62,7 +62,7 @@ const Lobby: FC<LobbyProps> = ({ game, isHost }) => {
       </div>
       {isHost ? (
         <Button
-          text={'start_game'}
+          text={t('start_game')}
           onClick={startGame}
           disabled={!game.players || game.players.length < 2}
         />
