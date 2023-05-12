@@ -24,10 +24,7 @@ const Scoreboard: FC<ScoreboardProps> = ({ game }) => {
           ))}
       </div>
       <Link href="/">
-        <Button
-          text="Play Again"
-          // onClick={nextRound} back to homepage
-        />
+        <Button text="Play Again" />
       </Link>
     </div>
   );

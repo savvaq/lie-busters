@@ -19,7 +19,7 @@ export default async function handler(
     pusher.trigger(`game-${game.code}`, 'game-finished', game);
   } else {
     const round = await createRound(game, game.rounds.length + 1);
-    game.rounds = [round];
+    game.rounds.push(round);
     pusher.trigger(`game-${game.code}`, 'round-started', game);
   }
 
