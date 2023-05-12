@@ -1,0 +1,102 @@
+// WINNER
+
+.scoreboard-card-winner {
+    border: 5px solid black;
+    border-radius: 20px;
+    min-width: 800px;
+    margin: 3rem 0;
+}
+
+.content-wrapper-winner {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    justify-items: center;
+    align-items: center;
+    margin: 1rem 2rem;
+}
+
+.place-winner {
+    width: 100px;
+    height: 100px;
+    background-color: black;
+    border-radius: 50%;
+    color: #f7b911;
+    text-align: center;
+    line-height: 100px;
+    font-size: 60px;
+    font-weight: bold;
+}
+
+.name-winner {
+    font-size: 60px;
+    color: #f7b911;
+}
+
+.score-wrapper-winner {
+    display: grid;
+    justify-items: center;
+    color: #f7b911;
+}
+
+.points-score-winner {
+    font-size: 60px;
+    font-weight: bold;
+    margin: 0;
+    line-height: 60px;
+}
+
+.points-text-winner {
+    text-transform: uppercase;
+    margin: 0;
+    font-weight: bold;
+}
+
+// REGULAR
+
+.scoreboard-card-regular {
+    min-width: 600px;
+}
+
+.content-wrapper-regular {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    justify-items: center;
+    align-items: center;
+    margin: 1rem;
+}
+
+.place-regular {
+    width: 50px;
+    height: 50px;
+    background-color: #f7b911;
+    border-radius: 50%;
+    color: black;
+    text-align: center;
+    line-height: 50px;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.name-regular {
+    font-size: 40px;
+    color:white;
+}
+
+.score-wrapper-regular {
+    display: grid;
+    justify-items: center;
+    color: #f7b911;
+}
+
+.points-score-regular {
+    font-size: 40px;
+    font-weight: bold;
+    margin: 0;
+    line-height: 40px;
+}
+
+.points-text-regular {
+    text-transform: uppercase;
+    margin: 0;
+    font-weight: bold;
+}
