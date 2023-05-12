@@ -1,0 +1,26 @@
+.scoreboard-wrapper {
+    display: grid;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    height: fit-content;
+    margin: auto;
+    max-width: 1000px;
+    row-gap: 3rem;
+}
+
+.scorecard-results-wrapper {
+    display: grid;
+    justify-items: center;
+    row-gap: 0.5rem;
+}
+
+.title {
+    color: #f7b911;
+    font-size: 80px;
+    margin: 0;
+    line-height: 80px;
+    justify-self: center;
+  }
