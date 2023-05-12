@@ -37,3 +37,27 @@
     grid-template-columns: 1fr 1fr 1fr;
     row-gap: 3rem;
 }
+
+@media (max-width: 440px) {
+    .title {
+        font-size: 50px;
+        line-height: 50px;
+    }
+
+    .voting-wrapper {
+        row-gap: 3rem;
+    }
+
+    .question {
+        font-size: 30px;
+    }
+
+    .sub-header {
+        font-size: 1em;
+    }
+
+    .answers-wrapper {
+        grid-template-columns: 1fr;
+        row-gap: 1rem;
+    }
+}

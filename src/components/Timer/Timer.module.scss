@@ -10,3 +10,12 @@
     position: absolute;
     right: 0;
 }
+
+@media (max-width: 440px) {
+    .timer {
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        font-size: 1.5rem;
+    }
+}
