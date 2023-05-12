@@ -9,7 +9,7 @@ export const findGameByCode = async (code: string) => {
     include: {
       players: true,
       rounds: {
-        orderBy: { startedAt: 'desc' },
+        orderBy: { startedAt: 'asc' },
         include: {
           answers: { include: { player: true } },
           votes: true,
@@ -26,7 +26,7 @@ export const findGameById = async (id: number) => {
     include: {
       players: true,
       rounds: {
-        orderBy: { startedAt: 'desc' },
+        orderBy: { startedAt: 'asc' },
         include: {
           answers: { include: { player: true } },
           votes: true,
@@ -142,7 +142,7 @@ export const updateGame = async (id: number, data: Partial<Game>) => {
     include: {
       players: true,
       rounds: {
-        orderBy: { startedAt: 'desc' },
+        orderBy: { startedAt: 'asc' },
         include: {
           answers: { include: { player: true } },
           votes: true,
