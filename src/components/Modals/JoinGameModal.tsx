@@ -9,6 +9,7 @@ import Button from '../Button/Button';
 import styles from './Modal/Modal.module.scss';
 import { AxiosError } from 'axios';
 import { ResponseError } from '@/lib/types';
+import { useTranslation } from 'next-i18next';
 
 type JoinGameModalProps = {
   isOpen: boolean;
@@ -16,6 +17,7 @@ type JoinGameModalProps = {
 };
 
 const JoinGameModal: FC<JoinGameModalProps> = ({ isOpen, onClose }) => {
+  const { t } = useTranslation();
   const router = useRouter();
   const {
     handleSubmit,
@@ -51,15 +53,15 @@ const JoinGameModal: FC<JoinGameModalProps> = ({ isOpen, onClose }) => {
   return (
     <Modal title="Join Game" isOpen={isOpen} onClose={onClose}>
       <form className={styles['modal-form']} onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="name">Your Name</label>
+        <label htmlFor="name">{t('your_name')}</label>
         <input {...register('name')} />
         <span>{errors?.name?.message}</span>
 
-        <label htmlFor="code">Game Code</label>
+        <label htmlFor="code">{t('game_code')}</label>
         <input {...register('code')} />
         <span>{errors?.code?.message}</span>
 
-        <Button text="Join Game" type="submit" />
+        <Button text={t('join_game')} type="submit" />
       </form>
     </Modal>
   );

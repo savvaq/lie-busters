@@ -18,7 +18,7 @@ export default async function handler(
       .json({ message: 'Invalid request', ...response.error.flatten() });
   }
 
-  const game = await createGame();
+  const game = await createGame(req.body.language || 'en');
 
   const avatar = Math.floor(Math.random() * 9) + 1 + '.png';
   const player = await createPlayer(game.id, response.data.name, true, avatar);

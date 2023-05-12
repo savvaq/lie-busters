@@ -15,12 +15,10 @@ type VoteCardProps = {
 
 const VoteCard: FC<VoteCardProps> = ({
   option,
-  vote,
   showResults,
   votesCount,
   isCorrect,
   isSelected,
-  disabled,
 }) => {
   return (
     <div
@@ -31,15 +29,19 @@ const VoteCard: FC<VoteCardProps> = ({
       })}
     >
       <div className={styles['card-content-wrapper']}>
-        { // how to properly nest this in {showResults && ()}?
+        {
+          // how to properly nest this in {showResults && ()}?
           option.players.map((player) => (
-              <img className={styles.avatar} key={player.id} src={`/avatars/${player.avatar}`} alt="avatar-img" />
+            <img
+              className={styles.avatar}
+              key={player.id}
+              src={`/avatars/${player.avatar}`}
+              alt="avatar-img"
+            />
           ))
         }
         <p className={styles.answer}>{option.value}</p>
-        {showResults && (
-          <p className={styles.votes}>Votes: {votesCount}</p>
-        )}
+        {showResults && <p className={styles.votes}>Votes: {votesCount}</p>}
       </div>
     </div>
   );

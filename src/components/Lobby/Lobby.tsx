@@ -6,6 +6,7 @@ import styles from './Lobby.module.scss';
 import { sigmar } from '../../app/fonts';
 import Button from '../Button/Button';
 import { useState } from 'react';
+import { useTranslation } from 'next-i18next';
 
 type LobbyProps = {
   game: GameWithRelations;
@@ -13,6 +14,8 @@ type LobbyProps = {
 };
 
 const Lobby: FC<LobbyProps> = ({ game, isHost }) => {
+  const { t } = useTranslation();
+
   const startGame = () => {
     startGameApi(game.id);
   };
@@ -59,13 +62,13 @@ const Lobby: FC<LobbyProps> = ({ game, isHost }) => {
       </div>
       {isHost ? (
         <Button
-          text="Start Game"
+          text={'start_game'}
           onClick={startGame}
           disabled={!game.players || game.players.length < 2}
         />
       ) : (
         <h2 className={styles.description}>
-          Waiting for host to start the game...
+          {t('waiting_for_host_to_start_game')}
         </h2>
       )}
     </div>

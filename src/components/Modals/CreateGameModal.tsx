@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useTranslation } from 'next-i18next';
 import { CreateGameSchemaType, CreateGameSchema } from '@/lib/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Modal from './Modal/Modal';
@@ -15,6 +16,8 @@ type CreateGameModalProps = {
 
 const CreateGameModal: FC<CreateGameModalProps> = ({ isOpen, onClose }) => {
   const router = useRouter();
+  const { t, i18n } = useTranslation();
+
   const {
     register,
     handleSubmit,
@@ -24,7 +27,7 @@ const CreateGameModal: FC<CreateGameModalProps> = ({ isOpen, onClose }) => {
   });
 
   const onSubmit: SubmitHandler<CreateGameSchemaType> = ({ name }) => {
-    createGameApi(name)
+    createGameApi(name, i18n.language)
       .then((res) => {
         router.push(`/game/${res.data.code}`);
       })
@@ -36,11 +39,11 @@ const CreateGameModal: FC<CreateGameModalProps> = ({ isOpen, onClose }) => {
   return (
     <Modal title="Create Game" isOpen={isOpen} onClose={onClose}>
       <form onSubmit={handleSubmit(onSubmit)} className={styles['modal-form']}>
-        <label htmlFor="name">Your Name</label>
+        <label htmlFor="name">{t('your_name')}</label>
         <input {...register('name')} />
         <span>{errors?.name?.message || ''}</span>
 
-        <Button text="Create Game" type="submit" />
+        <Button text={t('create_game')} type="submit" />
       </form>
     </Modal>
   );

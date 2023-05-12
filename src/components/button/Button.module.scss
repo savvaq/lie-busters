@@ -1,7 +1,6 @@
 .button {
   background-color: #ee490e;
   color: white;
-  width: 180px;
   height: 40px;
   border: none;
   text-align: center;
@@ -10,6 +9,7 @@
   font-size: 18px;
   font-weight: bold;
   border-radius: 15px;
+  padding: 0 1rem;
   cursor: pointer;
   justify-self: center;
 

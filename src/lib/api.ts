@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { GameWithRelations } from './types';
 
-export const createGameApi = async (name: string) => {
+export const createGameApi = async (name: string, language: string) => {
   return axios.post<GameWithRelations>('/api/games/create', {
     name,
+    language,
   });
 };
 
