@@ -44,9 +44,9 @@ export const findAnswerById = async (id: number) => {
   });
 };
 
-export const createGame = async () => {
+export const createGame = async (language: string) => {
   return prisma.game.create({
-    data: { code: uid(6).toUpperCase() },
+    data: { code: uid(6).toUpperCase(), language },
   });
 };
 

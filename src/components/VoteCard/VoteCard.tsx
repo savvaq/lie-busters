@@ -37,7 +37,9 @@ const VoteCard: FC<VoteCardProps> = ({
       {showResults && (
         <div>
           Answer given by:{' '}
-          {option.players.map((option) => option.name).join(', ')}
+          {option.players.map((player) => (
+            <img key={player.id} src={player.avatar} />
+          ))}
           <br />
           Votes received: {votesCount}
         </div>

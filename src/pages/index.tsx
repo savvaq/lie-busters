@@ -1,12 +1,16 @@
 import { useState } from 'react';
 import Head from 'next/head';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { sigmar } from '../app/fonts';
-import Button from '../components/Button/Button';
+import Button from '@/components/Button/Button';
 import styles from '@/styles/Home.module.css';
 import CreateGameModal from '@/components/Modals/CreateGameModal';
 import JoinGameModal from '@/components/Modals/JoinGameModal';
+import LanguageSelector from '@/components/LanguageSelector/LanguageSelector';
 
 export default function Home() {
+  const { t } = useTranslation();
   const [showCreateGameModal, setShowCreateGameModal] = useState(false);
   const [showJoinGameModal, setShowJoinGameModal] = useState(false);
 
@@ -20,14 +24,19 @@ export default function Home() {
       </Head>
 
       <div className={styles['game-wrapper']}>
+        <LanguageSelector />
+
         <h1 className={styles.title + ' ' + sigmar.className}>Lie Busters</h1>
-        <p className={styles.description}>Game where you can win by lying!</p>
+        <p className={styles.description}>{t('game_subtitle')}</p>
         <div className={styles['button-wrapper']}>
           <Button
-            text="Create Game"
+            text={t('create_game')}
             onClick={() => setShowCreateGameModal(true)}
           />
-          <Button text="Join Game" onClick={() => setShowJoinGameModal(true)} />
+          <Button
+            text={t('join_game')}
+            onClick={() => setShowJoinGameModal(true)}
+          />
         </div>
       </div>
       <div className={styles.modal}>
@@ -43,4 +52,12 @@ export default function Home() {
       </div>
     </>
   );
+}
+
+export async function getStaticProps({ locale }: any) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common'])),
+    },
+  };
 }

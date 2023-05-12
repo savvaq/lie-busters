@@ -1,0 +1,9 @@
+{
+  "start_game": "Start Game",
+  "create_game": "Create Game",
+  "join_game": "Join Game",
+  "game_subtitle": "Game where you can win by lying!",
+  "waiting_for_host_to_start_game": "Waiting for host to start the game...",
+  "your_name": "Your Name",
+  "game_code": "Game Code"
+}
