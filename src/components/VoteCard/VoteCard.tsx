@@ -31,7 +31,7 @@ const VoteCard: FC<VoteCardProps> = ({
       })}
     >
       <div className={styles['card-content-wrapper']}>
-        { 
+        { // how to properly nest this in {showResults && ()}?
           option.players.map((player) => (
               <img className={styles.avatar} key={player.id} src={`/avatars/${player.avatar}`} alt="avatar-img" />
           ))
