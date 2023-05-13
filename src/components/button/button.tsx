@@ -7,8 +7,6 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 const Button: FC<ButtonProps> = ({ text, size, ...props }) => {
-  // const buttonStyle = size === 'big' ? "styles['button_big']" : "styles.button";
-
   return (
     <button className={styles.button} {...props}>
       {text}
