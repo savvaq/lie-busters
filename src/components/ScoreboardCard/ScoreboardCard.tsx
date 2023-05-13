@@ -1,6 +1,13 @@
+import { Player } from '@prisma/client';
 import styles from './ScoreboardCard.module.scss';
+import { FC } from 'react';
 
-const ScoreboardCard = ({ player, place }) => {
+type ScoreboardCardProps = {
+    player: Player;
+    place: number;
+  };
+
+const ScoreboardCard: FC<ScoreboardCardProps> = ({ player, place }) => {
 
     const styleType = place === 1 ? 'winner' : 'regular';
 
