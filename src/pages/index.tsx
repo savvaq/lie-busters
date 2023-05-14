@@ -8,6 +8,7 @@ import styles from '@/styles/Home.module.css';
 import CreateGameModal from '@/components/Modals/CreateGameModal';
 import JoinGameModal from '@/components/Modals/JoinGameModal';
 import LanguageSelector from '@/components/LanguageSelector/LanguageSelector';
+import { GetServerSideProps } from 'next';
 
 export default function Home() {
   const { t } = useTranslation();
@@ -54,10 +55,10 @@ export default function Home() {
   );
 }
 
-export async function getStaticProps({ locale }: any) {
+export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ['common'])),
+      ...(await serverSideTranslations(locale ?? 'en', ['common'])),
     },
   };
-}
+};
