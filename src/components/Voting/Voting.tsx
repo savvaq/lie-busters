@@ -10,6 +10,7 @@ import { Player } from '@prisma/client';
 import styles from './Voting.module.scss';
 import { sigmar } from '@/app/fonts';
 import Timer from '../Timer/Timer';
+import { useTranslation } from 'next-i18next';
 
 type VotingProps = {
   game: GameWithRelations;
@@ -17,6 +18,8 @@ type VotingProps = {
 };
 
 const Voting: FC<VotingProps> = ({ game, currentPlayer }) => {
+  const { t } = useTranslation();
+
   const currentRound = game.rounds[game.rounds.length - 1];
   const question = currentRound.question;
   const deadtime = new Date(currentRound.votesStartedAt ?? Date.now());
@@ -62,14 +65,14 @@ const Voting: FC<VotingProps> = ({ game, currentPlayer }) => {
       <div className={styles['voting-wrapper']}>
         <Timer timeLeft={timeLeft} />
         <h1 className={styles.title + ' ' + sigmar.className}>
-          Round {game.rounds.length}
+          {t('round')} {game.rounds.length}
         </h1>
         <h2 className={styles.question}>{currentRound.question.text}</h2>
         <div className={styles['answers-block-wrapper']}>
           <p className={styles['sub-header']}>
             {currentRound.finishedAt !== null
-              ? 'Results:'
-              : 'Choose the correct answer:'}
+              ? `${t('results')}:`
+              : `${t('choose_the_correct_answer')}`}
           </p>
           <div className={styles['answers-wrapper']}>
             {options.map((option) => (
@@ -92,7 +95,9 @@ const Voting: FC<VotingProps> = ({ game, currentPlayer }) => {
         {currentRound.finishedAt && currentPlayer.isHost && (
           <Button
             onClick={nextRound}
-            text={game.rounds.length === 2 ? 'Show results' : 'Next round'}
+            text={
+              game.rounds.length === 2 ? t('show_results') : t('next_round')
+            }
           />
         )}
       </div>

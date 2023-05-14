@@ -7,6 +7,7 @@ import styles from './Question.module.css';
 import { sigmar } from '@/app/fonts';
 import Button from '../Button/Button';
 import Timer from '../Timer/Timer';
+import { useTranslation } from 'next-i18next';
 
 type QuestionProps = {
   game: GameWithRelations;
@@ -14,6 +15,7 @@ type QuestionProps = {
 };
 
 const Question: FC<QuestionProps> = ({ game, isHost }) => {
+  const { t } = useTranslation();
   const [value, setValue] = useState('');
   const [isSaving, setIsSaving] = useState(false);
   const [isAnswered, setIsAnswered] = useState(false);
@@ -47,7 +49,7 @@ const Question: FC<QuestionProps> = ({ game, isHost }) => {
       <div className={styles['question-wrapper']}>
         <Timer timeLeft={timeLeft} />
         <h1 className={styles.title + ' ' + sigmar.className}>
-          Round {game.rounds.length}
+          {t('round')} {game.rounds.length}
         </h1>
         <h2 className={styles.question}>{currentRound.question.text}</h2>
 
@@ -56,7 +58,7 @@ const Question: FC<QuestionProps> = ({ game, isHost }) => {
             type="text"
             value={value}
             className={styles.input}
-            placeholder="Type your lie here..."
+            placeholder={`${t('type_your_lie_here')}...`}
             onChange={(e) => setValue(e.target.value)}
           />
         ) : (
@@ -66,7 +68,9 @@ const Question: FC<QuestionProps> = ({ game, isHost }) => {
         {!isAnswered ? (
           <Button text="Submit" onClick={submitAnswer} />
         ) : (
-          <h1 className={styles.description}>Waiting for other players...</h1>
+          <h1 className={styles.description}>
+            {t('waiting_for_other_players')}...
+          </h1>
         )}
       </div>
     </>

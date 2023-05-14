@@ -33,7 +33,7 @@ const Lobby: FC<LobbyProps> = ({ game, isHost }) => {
     <div className={styles['lobby-wrapper']}>
       <h1 className={styles.title + ' ' + sigmar.className}>Lie Busters</h1>
       <div className={styles['game-code-wrapper']}>
-        <p className={styles['game-code-text']}>Game Code</p>
+        <p className={styles['game-code-text']}>{t('game_code')}</p>
         <div
           onClick={() => {
             navigator.clipboard.writeText(game.code);
@@ -42,11 +42,11 @@ const Lobby: FC<LobbyProps> = ({ game, isHost }) => {
           className={styles['game-code-number']}
         >
           {game.code}
-          {tooltip && <div className={styles['tooltip']}>Copied!</div>}
+          {tooltip && <div className={styles['tooltip']}>{t('copied')}!</div>}
         </div>
       </div>
       <h2 className={styles['players-header'] + ' ' + sigmar.className}>
-        Players
+        {t('players')}
       </h2>
       <div className={styles['players-wrapper']}>
         {game.players.map((player: Player) => (

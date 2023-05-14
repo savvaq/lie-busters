@@ -5,12 +5,15 @@ import styles from './Scoreboard.module.scss';
 import { sigmar } from '../../app/fonts';
 import Button from '../Button/Button';
 import Link from 'next/link';
+import { useTranslation } from 'next-i18next';
 
 type ScoreboardProps = {
   game: GameWithRelations;
 };
 
 const Scoreboard: FC<ScoreboardProps> = ({ game }) => {
+  const { t } = useTranslation();
+
   return (
     <div className={styles['scoreboard-wrapper']}>
       <h1 className={styles.title + ' ' + sigmar.className}>Final Results</h1>
@@ -24,7 +27,7 @@ const Scoreboard: FC<ScoreboardProps> = ({ game }) => {
           ))}
       </div>
       <Link href="/">
-        <Button text="Play Again" />
+        <Button text={t('play_again')} />
       </Link>
     </div>
   );

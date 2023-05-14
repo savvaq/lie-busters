@@ -2,6 +2,7 @@ import { FC } from 'react';
 import classNames from 'classnames';
 import { VoteOption } from '@/lib/types';
 import styles from './VoteCard.module.scss';
+import { useTranslation } from 'next-i18next';
 
 type VoteCardProps = {
   option: VoteOption;
@@ -21,6 +22,8 @@ const VoteCard: FC<VoteCardProps> = ({
   isSelected,
   vote,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <div
       className={classNames(styles.card, {
@@ -41,7 +44,11 @@ const VoteCard: FC<VoteCardProps> = ({
             />
           ))}
         <p className={styles.answer}>{option.value}</p>
-        {showResults && <p className={styles.votes}>Votes: {votesCount}</p>}
+        {showResults && (
+          <p className={styles.votes}>
+            {t('votes')}: {votesCount}
+          </p>
+        )}
       </div>
     </div>
   );
