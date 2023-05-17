@@ -60,14 +60,16 @@
   }
 }
 
-.close-modal {
+.close-modal-wrapper {
   position: absolute;
-  right: 13%;
-  top: 5%;
+  right: 4%;
+  top: 7%;
   opacity: 0.3;
+  width: 35px;
+  height: 35px;
 }
 
-.close-modal:hover {
+.close-modal-wrapper:hover {
   opacity: 1;
   cursor: pointer;
 }
