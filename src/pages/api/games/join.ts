@@ -76,7 +76,14 @@ export default async function handler(
 
   game.players = [...game.players, player];
 
-  pusher.trigger(`game-${game.code}`, 'player-joined', game);
-
-  return res.status(200).json(game);
+  pusher
+    .trigger(`game-${game.code}`, 'player-joined', game)
+    .then(() => {
+      console.log('Pusher: player-joined');
+      res.status(200).json(game);
+    })
+    .catch((error) => {
+      console.error('Pusher: player-joined', error);
+      res.status(500).json({ message: 'Internal server error' });
+    });
 }
