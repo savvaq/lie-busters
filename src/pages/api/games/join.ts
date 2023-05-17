@@ -79,7 +79,6 @@ export default async function handler(
   pusher
     .trigger(`game-${game.code}`, 'player-joined', game)
     .then(() => {
-      console.log('Pusher: player-joined');
       res.status(200).json(game);
     })
     .catch((error) => {

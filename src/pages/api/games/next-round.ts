@@ -13,15 +13,23 @@ export default async function handler(
 
   let game = await findGameById(gameId);
 
-  // TODO: change rounds number
-  if (game.rounds.length === 2) {
+  let event;
+  if (game.rounds.length === 5) {
     game = await updateGame(gameId, { finishedAt: new Date() });
-    pusher.trigger(`game-${game.code}`, 'game-finished', game);
+    event = 'game-finished';
   } else {
     const round = await createRound(game, game.rounds.length + 1);
     game.rounds.push(round);
-    pusher.trigger(`game-${game.code}`, 'round-started', game);
+    event = 'round-started';
   }
 
-  return res.status(200).json(game);
+  pusher
+    .trigger(`game-${game.code}`, event, game)
+    .then(() => {
+      res.status(200).json(game);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(500).json({ message: 'Something went wrong' });
+    });
 }
