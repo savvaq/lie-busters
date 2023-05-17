@@ -113,11 +113,9 @@
 }
 
 
-@media (max-width: 460px) {
-  .game-wrapper {
-    // top: 50%;
-    // right: 50%;
-    // margin: 0;
+@media (max-width: 460px) {  
+  .lobby-wrapper {
+    row-gap: 3rem;
   }
   
   .title {
@@ -125,9 +123,35 @@
     font-size: 60px;
   }
 
-  .description {
-    text-align: center;
+  .game-code-text {
     font-size: 20px;
+    width: 3rem;
   }
+
+  .game-code-number {
+    font-size: 40px;
+    height: 60px;
+    line-height: 60px;
+    width: 12rem;
+  }
+
+  .players-wrapper {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 140px));
+    width: 100%;
+    row-gap: 1.5rem;
+  }
+
+  .player-icon {
+    height: 80px;
+    width: 80px;
+  }
+
+  .player-name-wrapper {
+    height: 20px;
+    width: 100px;
+    font-size: 1rem;
+  }
+
+  
 }
 

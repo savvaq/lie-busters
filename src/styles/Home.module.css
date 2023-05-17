@@ -33,11 +33,6 @@
 }
 
 @media (max-width: 460px) {
-  .game-wrapper {
-    top: 50%;
-    right: 50%;
-    margin: 0;
-  }
   
   .title {
     text-align: center;
