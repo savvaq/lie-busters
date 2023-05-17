@@ -23,13 +23,7 @@ export default async function handler(
     event = 'round-started';
   }
 
-  pusher
-    .trigger(`game-${game.code}`, event, game)
-    .then(() => {
-      res.status(200).json(game);
-    })
-    .catch((error) => {
-      console.log(error);
-      res.status(500).json({ message: 'Something went wrong' });
-    });
+  await pusher.trigger(`game-${game.code}`, event, game);
+
+  return res.status(200).json(game);
 }
