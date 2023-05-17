@@ -23,7 +23,7 @@ export default async function handler(
     finishedAt: new Date(),
   });
 
-  pusher.trigger(`game-${game.code}`, 'round-finished', game);
+  await pusher.trigger(`game-${game.code}`, 'round-finished', game);
 
   res.status(200).json(game);
 }

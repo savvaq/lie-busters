@@ -30,5 +30,5 @@ export default async function handler(
     httpOnly: true,
   });
 
-  res.status(200).json(game);
+  return res.status(200).json(game);
 }

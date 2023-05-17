@@ -65,7 +65,7 @@ export default async function handler(
   game = await findGameById(gameId);
 
   if (round.votes.length === game.players.length) {
-    pusher.trigger(`game-${game.code}`, 'all-players-voted', game);
+    await pusher.trigger(`game-${game.code}`, 'all-players-voted', game);
   }
 
   res.status(200).json(game);
