@@ -44,7 +44,7 @@
   .game-wrapper {
     top: 50%;
     right: 50%;
-    height: auto;
+    margin: 0;
   }
   
   .title {
