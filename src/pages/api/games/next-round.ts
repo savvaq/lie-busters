@@ -23,5 +23,5 @@ export default async function handler(
     pusher.trigger(`game-${game.code}`, 'round-started', game);
   }
 
-  res.status(200).json(game);
+  return res.status(200).json(game);
 }
