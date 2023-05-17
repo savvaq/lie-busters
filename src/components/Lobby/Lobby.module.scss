@@ -75,6 +75,8 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 200px));
   row-gap: 2rem;
+  justify-self: center;
+  width: 80%;
 }
 
 .player-wrapper {
@@ -116,6 +118,7 @@
 @media (max-width: 460px) {  
   .lobby-wrapper {
     row-gap: 3rem;
+    width: 100%;
   }
   
   .title {
@@ -137,7 +140,7 @@
 
   .players-wrapper {
     grid-template-columns: repeat(auto-fit, minmax(140px, 140px));
-    width: 100%;
+    // width: 100%;
     row-gap: 1.5rem;
   }
 
