@@ -12,3 +12,9 @@ export const JoinGameSchema = z.object({
 });
 
 export type JoinGameSchemaType = z.infer<typeof JoinGameSchema>;
+
+export const AnswerSchema = z.object({
+  value: z.string().min(1).max(24),
+});
+
+export type AnswerSchemaType = z.infer<typeof AnswerSchema>;
