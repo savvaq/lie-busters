@@ -2,14 +2,6 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: repeat(3, auto);
-  /* position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto; */
-  /* height: fit-content;
-  width: fit-content; */
 }
 
 .title {

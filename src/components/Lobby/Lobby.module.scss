@@ -1,14 +1,7 @@
 .lobby-wrapper {
   display: grid;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  height: fit-content;
-  margin: auto;
-  max-width: 1000px;
   row-gap: 5rem;
+  width: 80%;
 }
 
 .title {
@@ -118,3 +111,23 @@
   font-size: 1.2rem;
   margin-top: 1rem;
 }
+
+
+@media (max-width: 460px) {
+  .game-wrapper {
+    // top: 50%;
+    // right: 50%;
+    // margin: 0;
+  }
+  
+  .title {
+    text-align: center;
+    font-size: 60px;
+  }
+
+  .description {
+    text-align: center;
+    font-size: 20px;
+  }
+}
+
