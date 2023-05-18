@@ -45,7 +45,9 @@ const useOptions = (round: RoundWithRelations) => {
     }
 
     return shuffleArray(options);
-  }, [round.answers, round.question.correctAnswer]);
+    // Skipping this rule because we don't want to recalculate this value
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 };
 
 export default useOptions;

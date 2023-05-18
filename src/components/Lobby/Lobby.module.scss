@@ -1,14 +1,7 @@
 .lobby-wrapper {
   display: grid;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  height: fit-content;
-  margin: auto;
-  max-width: 1000px;
   row-gap: 5rem;
+  width: 80%;
 }
 
 .title {
@@ -82,6 +75,8 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 200px));
   row-gap: 2rem;
+  justify-self: center;
+  width: 80%;
 }
 
 .player-wrapper {
@@ -119,29 +114,34 @@
   margin-top: 1rem;
 }
 
-@media (max-width: 440px) {
+
+@media (max-width: 460px) {  
   .lobby-wrapper {
-    row-gap: 4rem;
+    row-gap: 3rem;
+    width: 95%;
   }
   
   .title {
+    text-align: center;
     font-size: 60px;
-    line-height: 60px;
+  }
+
+  .game-code-text {
+    font-size: 20px;
+    width: 3rem;
   }
 
   .game-code-number {
     font-size: 40px;
     height: 60px;
     line-height: 60px;
+    width: 12rem;
   }
 
-  .description {
-    font-size: 20px;
-  }
-
-  .players-header {
-    font-size: 1.5rem;
-    line-height: 1.5rem;
+  .players-wrapper {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 140px));
+    // width: 100%;
+    row-gap: 1.5rem;
   }
 
   .player-icon {
@@ -154,4 +154,8 @@
     width: 100px;
     font-size: 1rem;
   }
+
+  .tooltip {
+    left: 20px;
+  } 
 }

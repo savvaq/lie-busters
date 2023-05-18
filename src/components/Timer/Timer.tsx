@@ -1,7 +1,12 @@
 import styles from './Timer.module.scss';
+import { FC } from 'react';
 
-const Timer = (props) => {
-    return <div className={styles.timer}>{props.timeLeft}</div>
+type TimerProps = {
+    timeLeft: number;
+  };
+
+const Timer: FC<TimerProps> = ({ timeLeft }) => {
+    return <div className={styles.timer}>{timeLeft}</div>
 };
 
 export default Timer;

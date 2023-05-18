@@ -37,7 +37,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     props: {
       game: JSON.parse(JSON.stringify(game)),
       player,
-      ...(await serverSideTranslations(context.locale || 'en', ['common'])),
+      ...(await serverSideTranslations(context.locale ?? 'en', ['common'])),
     },
   };
 }

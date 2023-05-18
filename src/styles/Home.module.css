@@ -2,14 +2,6 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: repeat(3, auto);
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
-  height: fit-content;
-  width: fit-content;
 }
 
 .title {
@@ -40,36 +32,15 @@
   margin-top: 4rem;
 }
 
-@media (max-width: 440px) {
-  .game-wrapper {
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(5, auto);
-  }
-
+@media (max-width: 460px) {
+  
   .title {
-    font-size: 60px;
-    grid-column-start: span 1;
-    justify-self: center;
-    margin: 0;
-    line-height: 60px;
     text-align: center;
+    font-size: 60px;
   }
 
   .description {
+    text-align: center;
     font-size: 20px;
-    grid-column-start: span 1;
-    justify-self: center;
-    margin: 0;
-    margin-top: 1rem;
-  }
-
-  .button-wrapper {
-    grid-column-start: span 1;
-    justify-self: center;
-    height: 100px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    margin-top: 4rem;
   }
 }

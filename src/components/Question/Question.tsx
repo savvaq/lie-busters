@@ -7,6 +7,10 @@ import styles from './Question.module.css';
 import { sigmar } from '@/app/fonts';
 import Button from '../Button/Button';
 import Timer from '../Timer/Timer';
+import { useTranslation } from 'next-i18next';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { AnswerSchema, AnswerSchemaType } from '@/lib/schemas';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 type QuestionProps = {
   game: GameWithRelations;
@@ -14,9 +18,18 @@ type QuestionProps = {
 };
 
 const Question: FC<QuestionProps> = ({ game, isHost }) => {
-  const [value, setValue] = useState('');
+  const { t } = useTranslation();
   const [isSaving, setIsSaving] = useState(false);
   const [isAnswered, setIsAnswered] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors },
+  } = useForm<AnswerSchemaType>({
+    resolver: zodResolver(AnswerSchema),
+  });
 
   const currentRound = game.rounds[game.rounds.length - 1];
   const deadtime = new Date(currentRound.startedAt);
@@ -31,7 +44,7 @@ const Question: FC<QuestionProps> = ({ game, isHost }) => {
   const timeLeft = useTimer(deadtime, startVoting);
   useListenToAllPlayersAnsweredEvent(game, startVoting);
 
-  const submitAnswer = () => {
+  const onSubmit: SubmitHandler<AnswerSchemaType> = ({ value }) => {
     if (isAnswered || isSaving) return;
 
     setIsSaving(true);
@@ -43,33 +56,36 @@ const Question: FC<QuestionProps> = ({ game, isHost }) => {
   };
 
   return (
-    <>
-      <div className={styles['question-wrapper']}>
-        <Timer timeLeft={timeLeft} />
-        <h1 className={styles.title + ' ' + sigmar.className}>
-          Round {game.rounds.length}
+    <form
+      className={styles['question-wrapper']}
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <Timer timeLeft={timeLeft} />
+      <h1 className={styles.title + ' ' + sigmar.className}>
+        {t('round')} {game.rounds.length}
+      </h1>
+      <h2 className={styles.question}>{currentRound.question.text}</h2>
+
+      {!isAnswered ? (
+        <input
+          type="text"
+          className={styles.input}
+          placeholder={`${t('type_your_lie_here')}...`}
+          {...register('value')}
+        />
+      ) : (
+        <div className={styles.answer}>{getValues('value')}</div>
+      )}
+      <span>{errors?.value?.message}</span>
+
+      {!isAnswered ? (
+        <Button type="submit" text="Submit" />
+      ) : (
+        <h1 className={styles.description}>
+          {t('waiting_for_other_players')}...
         </h1>
-        <h2 className={styles.question}>{currentRound.question.text}</h2>
-
-        {!isAnswered ? (
-          <input
-            type="text"
-            value={value}
-            className={styles.input}
-            placeholder="Type your lie here..."
-            onChange={(e) => setValue(e.target.value)}
-          />
-        ) : (
-          <div className={styles.answer}>{value}</div>
-        )}
-
-        {!isAnswered ? (
-          <Button text="Submit" onClick={submitAnswer} />
-        ) : (
-          <h1 className={styles.description}>Waiting for other players...</h1>
-        )}
-      </div>
-    </>
+      )}
+    </form>
   );
 };
 

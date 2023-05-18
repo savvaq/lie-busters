@@ -30,7 +30,7 @@ export default async function handler(
     (player) => player.id === Number(getCookie('playerId', { req }))
   );
   if (playerExists) {
-    res.status(200).json(game);
+    return res.status(200).json(game);
   }
 
   if (game.players.length >= 10) {
@@ -76,7 +76,7 @@ export default async function handler(
 
   game.players = [...game.players, player];
 
-  pusher.trigger(`game-${game.code}`, 'player-joined', game);
+  await pusher.trigger(`game-${game.code}`, 'player-joined', game);
 
   res.status(200).json(game);
 }

@@ -17,7 +17,9 @@ const Modal: FC<PropsWithChildren<ModalProps>> = ({
     <>
       <div className={styles.blur} />
       <div className={styles.modal}>
-        <div className={styles['close-modal']} onClick={onClose}></div>
+        <div className={styles['close-modal-wrapper']} onClick={onClose}>
+          <div className={styles['close-modal']}></div>
+        </div>
 
         <h2>{title}</h2>
 

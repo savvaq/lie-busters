@@ -25,7 +25,7 @@ export default async function handler(
   round = await updateRound(round.id, { votesStartedAt: new Date() });
   game.rounds[roundIndex] = round;
 
-  pusher.trigger(`game-${game.code}`, 'voting-started', game);
+  await pusher.trigger(`game-${game.code}`, 'voting-started', game);
 
   res.status(200).json(game);
 }

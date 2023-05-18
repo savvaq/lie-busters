@@ -5,5 +5,17 @@
   "game_subtitle": "Game where you can win by lying!",
   "waiting_for_host_to_start_game": "Waiting for host to start the game...",
   "your_name": "Your Name",
-  "game_code": "Game Code"
+  "game_code": "Game Code",
+  "copied": "Copied",
+  "players": "Players",
+  "round": "Round",
+  "type_your_lie_here": "Type your lie here",
+  "waiting_for_other_players": "Waiting for other players",
+  "play_again": "Play Again",
+  "points": "Points",
+  "votes": "Votes",
+  "next_round": "Next Round",
+  "show_results": "Show Results",
+  "results": "Results",
+  "choose_the_correct_answer": "Choose the correct answer"
 }

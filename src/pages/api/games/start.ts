@@ -29,7 +29,7 @@ export default async function handler(
 
   game.rounds = [round];
 
-  pusher.trigger(`game-${game.code}`, 'round-started', game);
+  await pusher.trigger(`game-${game.code}`, 'round-started', game);
 
-  res.status(200).json(game);
+  return res.status(200).json(game);
 }
