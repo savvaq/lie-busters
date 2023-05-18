@@ -118,7 +118,7 @@
 @media (max-width: 460px) {  
   .lobby-wrapper {
     row-gap: 3rem;
-    width: 100%;
+    width: 95%;
   }
   
   .title {
@@ -153,6 +153,10 @@
     height: 20px;
     width: 100px;
     font-size: 1rem;
+  }
+
+  .tooltip {
+    left: 20px;
   }
 
   
