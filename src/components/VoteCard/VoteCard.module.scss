@@ -57,3 +57,36 @@
     grid-row: 3;
   }
 }
+
+@media (max-width: 440px) {
+  .card {
+    width: 90%;
+    height: 100%;
+    min-height: 3rem;
+
+  .card-content-wrapper {
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+  }
+
+    .avatar {
+      width: 30px;
+      height: 30px;
+      grid-row: 1;
+      grid-column: 1;
+      align-self: center;
+    }
+
+    .answer {
+      font-size: 1rem;
+      grid-row: 1;
+      grid-column: 2;
+    }
+
+    .votes {
+      font-size: 0.6rem;
+      grid-row: 1;
+      grid-column: 3;
+    }
+  }
+}

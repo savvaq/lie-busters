@@ -33,7 +33,7 @@ const Question: FC<QuestionProps> = ({ game, isHost }) => {
 
   const currentRound = game.rounds[game.rounds.length - 1];
   const deadtime = new Date(currentRound.startedAt);
-  deadtime.setSeconds(deadtime.getSeconds() + 30);
+  deadtime.setSeconds(deadtime.getSeconds() + 500);
 
   const startVoting = useCallback(() => {
     if (!isHost) return;
