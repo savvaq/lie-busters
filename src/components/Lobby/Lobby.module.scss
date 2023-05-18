@@ -140,7 +140,6 @@
 
   .players-wrapper {
     grid-template-columns: repeat(auto-fit, minmax(140px, 140px));
-    // width: 100%;
     row-gap: 1.5rem;
   }
 
@@ -159,6 +158,9 @@
     left: 20px;
   }
 
+  .description {
+    font-size: 20px;
+  }
   
 }
 
