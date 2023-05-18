@@ -23,4 +23,14 @@
     margin: 0;
     line-height: 80px;
     justify-self: center;
-  }
+}
+
+.play-again-button {
+    justify-self: center;
+}
+
+@media (max-width: 440px) {
+    .scoreboard-wrapper {
+        row-gap: 5rem;
+    }
+}
