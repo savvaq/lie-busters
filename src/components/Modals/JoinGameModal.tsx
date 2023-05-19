@@ -69,7 +69,7 @@ const JoinGameModal: FC<JoinGameModalProps> = ({ isOpen, onClose }) => {
         <input {...register('code')} />
         <span>{errors?.code?.message}</span>
 
-        <Button text={t('join_game')} type="submit" />
+        <Button text={t('join_game')} type="submit" isLoading={isLoading} />
       </form>
     </Modal>
   );
