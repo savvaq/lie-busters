@@ -43,6 +43,9 @@ const VoteCard: FC<VoteCardProps> = ({
               alt="avatar-img"
             />
           ))}
+        {showResults && isCorrect && 
+          <p className={styles['correct-answer-text']}>Correct Answer</p>
+        }
         <p className={styles.answer}>{option.value}</p>
         {showResults && (
           <p className={styles.votes}>

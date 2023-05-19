@@ -64,10 +64,10 @@
     height: 100%;
     min-height: 3rem;
 
-  .card-content-wrapper {
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr;
-  }
+    .card-content-wrapper {
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 1fr;
+    }
 
     .avatar {
       width: 30px;
@@ -88,5 +88,10 @@
       grid-row: 1;
       grid-column: 3;
     }
+  }
+
+  .correct-answer-text {
+    font-size: 0.6rem;
+    width: 3rem;
   }
 }
