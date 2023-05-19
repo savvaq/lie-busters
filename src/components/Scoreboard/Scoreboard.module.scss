@@ -1,12 +1,5 @@
 .scoreboard-wrapper {
     display: grid;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    height: fit-content;
-    margin: auto;
     max-width: 1000px;
     row-gap: 3rem;
 }
@@ -30,7 +23,25 @@
 }
 
 @media (max-width: 440px) {
+    .title {
+        font-size: 60px;
+        line-height: 60px;
+    }
+
     .scoreboard-wrapper {
-        row-gap: 5rem;
+        row-gap: 1rem;
+    }
+
+    .scorecard-results-wrapper {
+        row-gap: 0.25rem;
+    }
+
+    .play-again-button {
+        font-size: 0.8rem;
+    }
+
+    .scorecard {
+        grid-template-columns: 1fr 1fr;
+        column-gap: 1rem;
     }
 }
