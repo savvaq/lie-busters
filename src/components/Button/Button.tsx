@@ -9,7 +9,7 @@ const Button: FC<ButtonProps> = ({ text, ...props }) => {
   return (
     <button className={styles.button} {...props}>
       {text}
-    </button>
+    </button> 
   );
 };
 

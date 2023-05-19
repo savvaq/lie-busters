@@ -12,7 +12,7 @@ type ScoreboardProps = {
 };
 
 const Scoreboard: FC<ScoreboardProps> = ({ game }) => {
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
 
   return (
     <div className={styles['scoreboard-wrapper']}>
@@ -36,7 +36,3 @@ const Scoreboard: FC<ScoreboardProps> = ({ game }) => {
 };
 
 export default Scoreboard;
-
-/* <li key={player.id}>
-{player.name} {player.score} {i === 0 && '👑'}
-</li> */
