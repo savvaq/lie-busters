@@ -5,7 +5,7 @@ import styles from './Scoreboard.module.scss';
 import { sigmar } from '../../app/fonts';
 import Button from '../Button/Button';
 import Link from 'next/link';
-import { useTranslation } from 'next-i18next';
+// import { useTranslation } from 'next-i18next';
 
 type ScoreboardProps = {
   game: GameWithRelations;
