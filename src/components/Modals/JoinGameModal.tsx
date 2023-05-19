@@ -10,6 +10,7 @@ import styles from './Modal/Modal.module.scss';
 import { AxiosError } from 'axios';
 import { ResponseError } from '@/lib/types';
 import { useTranslation } from 'next-i18next';
+import { useState } from 'react';
 
 type JoinGameModalProps = {
   isOpen: boolean;
@@ -17,6 +18,8 @@ type JoinGameModalProps = {
 };
 
 const JoinGameModal: FC<JoinGameModalProps> = ({ isOpen, onClose }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const { t } = useTranslation();
   const router = useRouter();
   const {
@@ -29,6 +32,7 @@ const JoinGameModal: FC<JoinGameModalProps> = ({ isOpen, onClose }) => {
   });
 
   const onSubmit: SubmitHandler<JoinGameSchemaType> = ({ code, name }) => {
+    setIsLoading(true);
     joinGameApi(code, name)
       .then((res) => {
         router.push(`/game/${res.data.code}`);
@@ -39,15 +43,19 @@ const JoinGameModal: FC<JoinGameModalProps> = ({ isOpen, onClose }) => {
             type: 'manual',
             message: error.response.data.fieldErrors.name[0],
           });
-        }
-
+        } 
+        
         if (error.response?.data?.fieldErrors?.code) {
           setError('name', {
             type: 'manual',
             message: error.response.data.fieldErrors.code[0],
           });
         }
-      });
+      })
+      .finally(() => {
+        setIsLoading(false);
+      }
+    );
   };
 
   return (
