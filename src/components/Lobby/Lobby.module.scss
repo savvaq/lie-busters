@@ -118,7 +118,8 @@
 @media (max-width: 460px) {  
   .lobby-wrapper {
     row-gap: 3rem;
-    width: 95%;
+    width: 100%;
+    margin: 0 2rem;
   }
   
   .title {
@@ -161,6 +162,7 @@
   .description {
     font-size: 20px;
     width: 90%;
+    text-align: center;
   }
   
 }
