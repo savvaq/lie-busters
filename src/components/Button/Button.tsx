@@ -6,11 +6,11 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   isLoading?: boolean;
 };
 
-const Button: FC<ButtonProps> = ({ text, ...props }) => {
+const Button: FC<ButtonProps> = ({ text, isLoading, ...props }) => {
   return (
-    <button className={styles.button} {...props}>
+    <button className={isLoading ? styles.button : styles['button-loading'] } {...props}>
       {text}
-    </button> 
+    </button>
   );
 };
 
