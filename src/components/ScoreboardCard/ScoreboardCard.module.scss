@@ -100,3 +100,67 @@
     margin: 0;
     font-weight: bold;
 }
+
+@media (max-width: 440px) {
+    .scoreboard-card-winner {
+        min-width: 0;
+        border: 2px solid #f7b911;
+        margin: 2rem;
+    }
+    
+    .content-wrapper-winner {
+        grid-template-columns: 5rem minmax(10rem,1fr) 5rem;
+        margin: 0.5rem 0;
+        text-align: center;
+    }
+
+    .content-wrapper-regular {
+        grid-template-columns: 5rem minmax(10rem,1fr) 5rem;
+        margin: 0;
+        text-align: center;
+    }
+
+    .scoreboard-card-regular {
+        min-width: 0;
+    }
+
+    .place-winner {
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        font-size: 30px;
+    }
+
+    .name-winner {
+        font-size: 20px;
+    }
+
+    .points-score-winner {
+        font-size: 30px;
+        line-height: 30px;
+    }
+
+    .points-text-winner {
+        font-size: 14px;
+    }
+
+    .place-regular {
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        font-size: 20px;
+    }
+
+    .name-regular {
+        font-size: 15px;
+    }
+
+    .points-score-regular {
+        font-size: 15px;
+        line-height: 15px;
+    }
+
+    .points-text-regular {
+        font-size: 10px;
+    }
+}
