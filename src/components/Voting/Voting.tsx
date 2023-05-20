@@ -18,7 +18,6 @@ type VotingProps = {
 };
 
 const Voting: FC<VotingProps> = ({ game, currentPlayer }) => {
-  const [isLoading, setIsLoading] = useState(false);
   const { t } = useTranslation();
 
   const currentRound = game.rounds[game.rounds.length - 1];
@@ -97,7 +96,6 @@ const Voting: FC<VotingProps> = ({ game, currentPlayer }) => {
         {currentRound.finishedAt && currentPlayer.isHost && (
           <Button
             onClick={nextRound}
-            isLoading={isLoading}
             text={
               game.rounds.length === 2 ? t('show_results') : t('next_round')
             }
