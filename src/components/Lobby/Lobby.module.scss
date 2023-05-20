@@ -1,7 +1,7 @@
 .lobby-wrapper {
   display: grid;
   row-gap: 5rem;
-  width: 80%;
+  max-width: 1000px;
 }
 
 .title {
@@ -76,7 +76,7 @@
   grid-template-columns: repeat(auto-fit, minmax(200px, 200px));
   row-gap: 2rem;
   justify-self: center;
-  width: 80%;
+  width: 100%;
 }
 
 .player-wrapper {
@@ -142,6 +142,7 @@
   .players-wrapper {
     grid-template-columns: repeat(auto-fit, minmax(140px, 140px));
     row-gap: 1.5rem;
+    max-width: 90%;
   }
 
   .player-icon {
