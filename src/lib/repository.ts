@@ -4,7 +4,7 @@ import { Game, Player, Round } from '@prisma/client';
 import { uid } from 'uid';
 
 export const findGameByCode = async (code: string) => {
-  return await prisma.game.findFirstOrThrow({
+  return await prisma.game.findFirst({
     where: { code, finishedAt: null },
     include: {
       players: true,

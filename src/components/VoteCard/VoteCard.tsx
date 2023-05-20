@@ -20,6 +20,7 @@ const VoteCard: FC<VoteCardProps> = ({
   votesCount,
   isCorrect,
   isSelected,
+  disabled,
   vote,
 }) => {
   const { t } = useTranslation();
@@ -31,6 +32,7 @@ const VoteCard: FC<VoteCardProps> = ({
         [styles.correct]: showResults && isCorrect,
         [styles.incorrect]: showResults && !isCorrect,
         [styles.inactive]: showResults,
+        [styles.disabled]: !showResults && disabled,
       })}
     >
       <div className={styles['card-content-wrapper']} onClick={vote}>
@@ -43,9 +45,9 @@ const VoteCard: FC<VoteCardProps> = ({
               alt="avatar-img"
             />
           ))}
-        {showResults && isCorrect && 
+        {showResults && isCorrect && (
           <p className={styles['correct-answer-text']}>Correct Answer</p>
-        }
+        )}
         <p className={styles.answer}>{option.value}</p>
         {showResults && (
           <p className={styles.votes}>

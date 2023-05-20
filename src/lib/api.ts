@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from './axios';
 import { GameWithRelations } from './types';
 
 export const createGameApi = async (name: string, language: string) => {

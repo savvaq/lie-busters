@@ -7,7 +7,7 @@ const useListenToAllPlayersVotedEvent = (game: Game, listener: () => void) => {
     pusher.subscribe(`game-${game.code}`).bind('all-players-voted', listener);
 
     return () => {
-      pusher.unbind('all-players-voted', listener);
+      pusher.channel(`game-${game.code}`).unbind('all-players-voted', listener);
     };
   }, [game.code, listener]);
 };

@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { ZodError, ZodIssueCode } from 'zod';
 import { Game } from '@prisma/client';
 import pusher from '@/lib/pusher';
 import { ResponseError } from '@/lib/types';
@@ -7,6 +6,7 @@ import { getCookie, setCookie } from 'cookies-next';
 import { createPlayer, findGameByCode } from '@/lib/repository';
 import randomItemFromArray from '@/helpers/randomItemFromArray';
 import { JoinGameSchema } from '@/lib/schemas';
+import CustomZodError from '@/errors/CustomZodError';
 
 export default async function handler(
   req: NextApiRequest,
@@ -15,15 +15,19 @@ export default async function handler(
   const response = JoinGameSchema.safeParse(req.body);
 
   if (!response.success) {
-    return res
-      .status(400)
-      .json({ message: 'Invalid request', ...response.error.flatten() });
+    return res.status(422).json(response.error.flatten());
   }
 
   const game = await findGameByCode(response.data.code);
 
+  if (!game) {
+    const error = new CustomZodError('code', 'Game not found');
+    return res.status(422).json(error.flatten());
+  }
+
   if (game.startedAt) {
-    return res.status(400).json({ message: 'Game already started' });
+    const error = new CustomZodError('code', 'Game already started');
+    return res.status(422).json(error.flatten());
   }
 
   const playerExists = game.players.find(
@@ -34,21 +38,13 @@ export default async function handler(
   }
 
   if (game.players.length >= 10) {
-    return res.status(400).json({ message: 'Game is full' });
+    const error = new CustomZodError('code', 'Game is full');
+    return res.status(422).json(error.flatten());
   }
 
   if (game.players.some((player) => player.name === response.data.name)) {
-    const error = new ZodError([
-      {
-        code: ZodIssueCode.custom,
-        path: ['name'],
-        message: 'Name already taken',
-      },
-    ]);
-
-    return res
-      .status(400)
-      .json({ message: 'Invalid request', ...error.flatten() });
+    const error = new CustomZodError('name', 'Name already taken');
+    return res.status(422).json(error.flatten());
   }
 
   const usedAvatars = game.players.map((player) => player.avatar);
