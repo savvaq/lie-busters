@@ -18,6 +18,7 @@ const Scoreboard: FC<ScoreboardProps> = ({ game }) => {
     <div className={styles['scoreboard-wrapper']}>
       <h1 className={styles.title + ' ' + sigmar.className}>Final Results</h1>
       <div className={styles['scorecard-results-wrapper']}>
+        <img src="/img/crown.png" alt="Logo" className={styles.img} />
         {game.players
           .sort((a, b) => b.score - a.score)
           .map((player, i) => (

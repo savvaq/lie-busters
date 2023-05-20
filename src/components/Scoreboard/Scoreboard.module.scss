@@ -8,6 +8,7 @@
     display: grid;
     justify-items: center;
     row-gap: 0.5rem;
+    position: relative;
 }
 
 .title {
@@ -20,6 +21,15 @@
 
 .play-again-button {
     justify-self: center;
+}
+
+.img {
+    width: 140px;
+    height: 140px;
+    position: absolute;
+    left: -2rem;
+    top: -2rem;
+    rotate: -30deg;
 }
 
 @media (max-width: 440px) {
