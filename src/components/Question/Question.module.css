@@ -55,11 +55,11 @@
 
 @media (max-width: 440px) {
     .question-wrapper {
-        row-gap: 3rem;
+        row-gap: 2rem;
     }
 
     .question {
-        font-size: 40px;
+        font-size: 30px;
         text-align: center;
     }
 
