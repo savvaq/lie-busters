@@ -15,12 +15,13 @@ type LobbyProps = {
 
 const Lobby: FC<LobbyProps> = ({ game, isHost }) => {
   const { t } = useTranslation();
+  const [tooltip, setTooltip] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const startGame = () => {
+    setIsLoading(true);
     startGameApi(game.id);
   };
-
-  const [tooltip, setTooltip] = useState(false);
 
   const showTooltip = () => {
     setTooltip(true);
@@ -64,6 +65,7 @@ const Lobby: FC<LobbyProps> = ({ game, isHost }) => {
         <Button
           text={t('start_game')}
           onClick={startGame}
+          isLoading={isLoading}
           disabled={!game.players || game.players.length < 2}
         />
       ) : (

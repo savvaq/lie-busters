@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import { createGameApi } from '@/lib/api';
 import Button from '../Button/Button';
 import styles from './Modal/Modal.module.scss';
+import { useState } from 'react';
 
 type CreateGameModalProps = {
   isOpen: boolean;
@@ -15,6 +16,7 @@ type CreateGameModalProps = {
 };
 
 const CreateGameModal: FC<CreateGameModalProps> = ({ isOpen, onClose }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const { t, i18n } = useTranslation();
 
@@ -27,13 +29,18 @@ const CreateGameModal: FC<CreateGameModalProps> = ({ isOpen, onClose }) => {
   });
 
   const onSubmit: SubmitHandler<CreateGameSchemaType> = ({ name }) => {
+    setIsLoading(true);
     createGameApi(name, i18n.language)
       .then((res) => {
         router.push(`/game/${res.data.code}`);
       })
       .catch((error) => {
         console.log(error);
-      });
+      })
+      .finally(() => {
+        setIsLoading(false);
+      }
+    );
   };
 
   return (
@@ -43,7 +50,7 @@ const CreateGameModal: FC<CreateGameModalProps> = ({ isOpen, onClose }) => {
         <input {...register('name')} />
         <span>{errors?.name?.message || ''}</span>
 
-        <Button text={t('create_game')} type="submit" />
+        <Button text={t('create_game')} type="submit" isLoading={isLoading} />
       </form>
     </Modal>
   );

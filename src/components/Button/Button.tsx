@@ -7,9 +7,15 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 };
 
 const Button: FC<ButtonProps> = ({ text, isLoading, ...props }) => {
+  console.log(isLoading);
   return (
-    <button className={isLoading ? styles.button : styles['button-loading'] } {...props}>
-      {text}
+    <button className={styles.button} {...props}>
+      { 
+      isLoading ?
+      <div className={styles.loader}></div> 
+      :
+      text
+      }
     </button>
   );
 };

@@ -21,6 +21,7 @@ const Question: FC<QuestionProps> = ({ game, isHost }) => {
   const { t } = useTranslation();
   const [isSaving, setIsSaving] = useState(false);
   const [isAnswered, setIsAnswered] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -46,13 +47,17 @@ const Question: FC<QuestionProps> = ({ game, isHost }) => {
 
   const onSubmit: SubmitHandler<AnswerSchemaType> = ({ value }) => {
     if (isAnswered || isSaving) return;
-
+    setIsLoading(true);
     setIsSaving(true);
 
-    saveAnswerApi(game.id, currentRound.id, value).then(() => {
-      setIsSaving(false);
-      setIsAnswered(true);
-    });
+    saveAnswerApi(game.id, currentRound.id, value)
+      .then(() => {
+        setIsSaving(false);
+        setIsAnswered(true);
+      })
+      .finally (() => {
+        setIsLoading(false);
+      });
   };
 
   return (
@@ -79,7 +84,7 @@ const Question: FC<QuestionProps> = ({ game, isHost }) => {
       <span>{errors?.value?.message}</span>
 
       {!isAnswered ? (
-        <Button type="submit" text="Submit" />
+        <Button type="submit" text="Submit" isLoading={isLoading} />
       ) : (
         <h1 className={styles.description}>
           {t('waiting_for_other_players')}...
