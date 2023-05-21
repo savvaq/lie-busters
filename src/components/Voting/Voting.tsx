@@ -46,11 +46,7 @@ const Voting: FC<VotingProps> = ({ game, currentPlayer }) => {
   };
 
   const optionIsDisabled = (option: VoteOption) => {
-    return (
-      currentRound.finishedAt !== null ||
-      selectedAnswerId !== undefined ||
-      option.players.some((player) => player.id === currentPlayer.id)
-    );
+    return option.players.some((player) => player.id === currentPlayer.id);
   };
 
   const vote = (answerId: number | null) => {

@@ -19,7 +19,6 @@ type QuestionProps = {
 
 const Question: FC<QuestionProps> = ({ game, isHost }) => {
   const { t } = useTranslation();
-  const [isSaving, setIsSaving] = useState(false);
   const [isAnswered, setIsAnswered] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -27,6 +26,7 @@ const Question: FC<QuestionProps> = ({ game, isHost }) => {
     register,
     handleSubmit,
     getValues,
+    setError,
     formState: { errors },
   } = useForm<AnswerSchemaType>({
     resolver: zodResolver(AnswerSchema),
@@ -46,18 +46,20 @@ const Question: FC<QuestionProps> = ({ game, isHost }) => {
   useListenToAllPlayersAnsweredEvent(game, startVoting);
 
   const onSubmit: SubmitHandler<AnswerSchemaType> = ({ value }) => {
-    if (isAnswered || isSaving) return;
+    if (isAnswered || isLoading) return;
     setIsLoading(true);
-    setIsSaving(true);
 
     saveAnswerApi(game.id, currentRound.id, value)
-      .then(() => {
-        setIsSaving(false);
-        setIsAnswered(true);
+      .then(() => setIsAnswered(true))
+      .catch((error) => {
+        if (error.response?.data?.fieldErrors?.value) {
+          setError('value', {
+            type: 'manual',
+            message: error.response.data.fieldErrors.value[0],
+          });
+        }
       })
-      .finally (() => {
-        setIsLoading(false);
-      });
+      .finally(() => setIsLoading(false));
   };
 
   return (

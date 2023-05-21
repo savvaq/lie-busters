@@ -36,6 +36,11 @@ export default async function handler(
     return res.status(400).json({ message: 'Invalid request' });
   }
 
+  // Player voted for his own answer
+  if (answer?.playerId === playerId) {
+    return res.status(400).json({ message: "That's your asnwer!" });
+  }
+
   // Player voted for correct answer that no one has given
   if (answerId === null) {
     score += 2;

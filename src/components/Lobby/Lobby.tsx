@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import { Player } from '@prisma/client';
 import { GameWithRelations } from '@/lib/types';
 import { startGameApi } from '@/lib/api';
 import styles from './Lobby.module.scss';
@@ -50,7 +49,7 @@ const Lobby: FC<LobbyProps> = ({ game, isHost }) => {
         {t('players')}
       </h2>
       <div className={styles['players-wrapper']}>
-        {game.players.map((player: Player) => (
+        {game.players.map((player) => (
           <div key={player.id} className={styles['player-wrapper']}>
             <div className={styles['player-icon']}>
               <img src={`/avatars/${player.avatar}`} alt={player.name} />
@@ -66,7 +65,7 @@ const Lobby: FC<LobbyProps> = ({ game, isHost }) => {
           text={t('start_game')}
           onClick={startGame}
           isLoading={isLoading}
-          disabled={!game.players || game.players.length < 2}
+          disabled={game.players.length < 2}
         />
       ) : (
         <h2 className={styles.description}>

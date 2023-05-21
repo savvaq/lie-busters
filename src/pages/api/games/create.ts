@@ -13,9 +13,7 @@ export default async function handler(
   const response = CreateGameSchema.safeParse(req.body);
 
   if (!response.success) {
-    return res
-      .status(400)
-      .json({ message: 'Invalid request', ...response.error.flatten() });
+    return res.status(422).json(response.error.flatten());
   }
 
   const game = await createGame(req.body.language || 'en');

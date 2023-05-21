@@ -16,7 +16,7 @@ export default async function handler(
   const round = game.rounds[roundIndex];
 
   if (!round || round.finishedAt !== null) {
-    return res.status(400).json({ message: 'Invalid request' });
+    return res.status(400).json({ message: 'Round already finished' });
   }
 
   game.rounds[roundIndex] = await updateRound(roundId, {

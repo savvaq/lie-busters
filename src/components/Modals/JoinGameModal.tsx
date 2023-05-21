@@ -43,10 +43,10 @@ const JoinGameModal: FC<JoinGameModalProps> = ({ isOpen, onClose }) => {
             type: 'manual',
             message: error.response.data.fieldErrors.name[0],
           });
-        } 
-        
+        }
+
         if (error.response?.data?.fieldErrors?.code) {
-          setError('name', {
+          setError('code', {
             type: 'manual',
             message: error.response.data.fieldErrors.code[0],
           });
@@ -54,8 +54,7 @@ const JoinGameModal: FC<JoinGameModalProps> = ({ isOpen, onClose }) => {
       })
       .finally(() => {
         setIsLoading(false);
-      }
-    );
+      });
   };
 
   return (
