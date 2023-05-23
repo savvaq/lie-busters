@@ -31,14 +31,17 @@ const Voting: FC<VotingProps> = ({ game, currentPlayer }) => {
     finishVotingApi(game.id, currentRound.id);
   }, [game, currentRound, currentPlayer]);
 
-  const nextRound = () => {
-    nextRoundApi(game.id);
-  };
+  useListenToAllPlayersVotedEvent(game, finishVoting);
 
+  const [isLoading, setIsLoading] = useState(false);
   const [selectedAnswerId, setSelectedAnswerId] = useState<number | null>();
   const options = useOptions(currentRound);
   const timeLeft = useTimer(deadline, finishVoting);
-  useListenToAllPlayersVotedEvent(game, finishVoting);
+
+  const nextRound = () => {
+    setIsLoading(true);
+    nextRoundApi(game.id).catch(() => setIsLoading(false));
+  };
 
   const votesCountForOption = (optionId: number | null) => {
     return currentRound.votes.filter((vote) => vote.answerId === optionId)
@@ -59,9 +62,7 @@ const Voting: FC<VotingProps> = ({ game, currentPlayer }) => {
   return (
     <>
       <div className={styles['voting-wrapper']}>
-        {(currentRound.finishedAt !== null || selectedAnswerId !== null) && (
-          <Timer timeLeft={timeLeft} />
-        )}
+        {currentRound.finishedAt !== null && <Timer timeLeft={timeLeft} />}
 
         <h1 className={styles.title + ' ' + sigmar.className}>
           {t('round')} {game.rounds.length}
@@ -96,6 +97,7 @@ const Voting: FC<VotingProps> = ({ game, currentPlayer }) => {
           <Button
             onClick={nextRound}
             size="large"
+            isLoading={isLoading}
             text={
               game.rounds.length === 5 ? t('show_results') : t('next_round')
             }

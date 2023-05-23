@@ -11,12 +11,13 @@
   "round": "Раунд",
   "type_your_lie_here": "Напишите вашу ложь здесь",
   "waiting_for_other_players": "Ожидание других игроков",
-  "play_again": "Играть еще раз",
+  "play_again": "Сыграть еще раз",
   "points": "балла(-ов)",
   "votes": "Голоса",
   "next_round": "Следующий раунд",
   "show_results": "Показать результаты",
   "results": "Результаты",
   "choose_the_correct_answer": "Выберите правильный ответ",
-  "submit": "Отправить"
+  "submit": "Отправить",
+  "final_results": "Результаты"
 }
