@@ -55,7 +55,7 @@ const Lobby: FC<LobbyProps> = ({ game, isHost }) => {
               <img src={`/avatars/${player.avatar}`} alt={player.name} />
             </div>
             <div className={styles['player-name-wrapper']}>
-              <p className={styles['player-name-text']}>{player.name}</p>
+              <span className={styles['player-name-text']}>{player.name}</span>
             </div>
           </div>
         ))}
