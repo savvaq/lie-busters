@@ -62,7 +62,7 @@ const Voting: FC<VotingProps> = ({ game, currentPlayer }) => {
   return (
     <>
       <div className={styles['voting-wrapper']}>
-        {currentRound.finishedAt !== null && <Timer timeLeft={timeLeft} />}
+        {currentRound.finishedAt === null && <Timer timeLeft={timeLeft} />}
 
         <h1 className={styles.title + ' ' + sigmar.className}>
           {t('round')} {game.rounds.length}
