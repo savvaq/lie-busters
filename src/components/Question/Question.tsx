@@ -1,4 +1,4 @@
-import { FC, useCallback, useState } from 'react';
+import { FC, FormEventHandler, useCallback, useState } from 'react';
 import { GameWithRelations } from '@/lib/types';
 import { saveAnswerApi, startVotingApi } from '@/lib/api';
 import useTimer from '../../hooks/useTimer';
@@ -25,7 +25,7 @@ const Question: FC<QuestionProps> = ({ game, isHost }) => {
 
   const currentRound = game.rounds[game.rounds.length - 1];
   const deadline = new Date(currentRound.startedAt);
-  deadline.setSeconds(deadline.getSeconds() + 500);
+  deadline.setSeconds(deadline.getSeconds() + 30);
 
   const startVoting = useCallback(() => {
     if (!isHost) return;
@@ -36,7 +36,8 @@ const Question: FC<QuestionProps> = ({ game, isHost }) => {
   const timeLeft = useTimer(deadline, startVoting);
   useListenToAllPlayersAnsweredEvent(game, startVoting);
 
-  const onSubmit = () => {
+  const onSubmit: FormEventHandler = (e) => {
+    e.preventDefault();
     if (isAnswered || isLoading) return;
     setIsLoading(true);
 
