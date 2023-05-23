@@ -23,11 +23,13 @@
   &.medium {
     height: 40px;
     font-size: 18px;
+    min-width: 10rem;
   }
 
   &.large {
     height: 50px;
     font-size: 20px;
+    min-width: 10rem;
   }
 
   &:disabled {
