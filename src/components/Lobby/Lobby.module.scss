@@ -73,7 +73,7 @@
 
 .players-wrapper {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 200px));
+  grid-template-columns: repeat(3, 1fr);
   row-gap: 2rem;
   justify-self: center;
   width: 100%;
@@ -101,17 +101,25 @@
 
 .player-name-wrapper {
   background-color: black;
-  height: 30px;
-  width: 150px;
+  height: fit-content;
+  width: fit-content;
+  word-wrap: break-word; 
+  height: fit-content;
   border-radius: 10px;
-  color: #ee490e;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-weight: bold;
-  font-size: 1.2rem;
   margin-top: 1rem;
+  min-width: 100px;
+}
+
+.player-name-text {
+  font-size: 1.2rem;
+  color: #ee490e;
+  margin: 0 1rem;
+  text-align: center;
 }
 
 @media (max-width: 460px) {

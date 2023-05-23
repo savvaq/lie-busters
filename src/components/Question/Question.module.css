@@ -35,7 +35,7 @@
 }
 
 .answer {
-    width: 50%;
+    width: fit-content;
     color: #f7b911;
     justify-self: center;
     height: 100%;
@@ -43,6 +43,7 @@
     font-size: 60px;
     font-weight: 400;
     text-align: center;
+    padding: 0 1rem;
 }
 
 .description {
@@ -69,11 +70,11 @@
     }
 
     .input {
-        font-size: 30px;
+        font-size: 25px;
     }
 
     .answer {
-        font-size: 40px;
+        font-size: 35px;
     }
 
     .description {
