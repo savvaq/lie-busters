@@ -95,6 +95,7 @@ const Voting: FC<VotingProps> = ({ game, currentPlayer }) => {
         {currentRound.finishedAt && currentPlayer.isHost && (
           <Button
             onClick={nextRound}
+            size="large"
             text={
               game.rounds.length === 5 ? t('show_results') : t('next_round')
             }

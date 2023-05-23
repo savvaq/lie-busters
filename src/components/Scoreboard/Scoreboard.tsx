@@ -29,7 +29,7 @@ const Scoreboard: FC<ScoreboardProps> = ({ game }) => {
       </div>
       <div className={styles['play-again-button']}>
         <Link href="/">
-          <Button text="Play Again" />
+          <Button size="large" text="Play Again" />
         </Link>
       </div>
     </div>

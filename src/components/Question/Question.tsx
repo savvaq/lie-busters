@@ -75,7 +75,12 @@ const Question: FC<QuestionProps> = ({ game, isHost }) => {
             required
           />
           <span>{errors.value}</span>
-          <Button type="submit" text={t('submit')} isLoading={isLoading} />
+          <Button
+            type="submit"
+            size="large"
+            text={t('submit')}
+            isLoading={isLoading}
+          />
         </>
       )}
     </form>

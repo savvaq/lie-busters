@@ -63,6 +63,7 @@ const Lobby: FC<LobbyProps> = ({ game, isHost }) => {
       {isHost ? (
         <Button
           text={t('start_game')}
+          size="large"
           onClick={startGame}
           isLoading={isLoading}
           disabled={game.players.length < 2}

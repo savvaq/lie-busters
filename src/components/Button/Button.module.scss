@@ -14,7 +14,21 @@
   padding: 0 1rem;
   cursor: pointer;
   justify-self: center;
-  min-width: 10rem;
+
+  &.small {
+    height: 30px;
+    font-size: 15px;
+  }
+
+  &.medium {
+    height: 40px;
+    font-size: 18px;
+  }
+
+  &.large {
+    height: 50px;
+    font-size: 20px;
+  }
 
   &:disabled {
     background-color: #ccc;
@@ -31,14 +45,13 @@
   border-radius: 50%;
   animation: rotation 1s linear infinite;
   margin: 0;
-  }
+}
 
-  @keyframes rotation {
+@keyframes rotation {
   0% {
-      transform: rotate(0deg);
+    transform: rotate(0deg);
   }
   100% {
-      transform: rotate(360deg);
+    transform: rotate(360deg);
   }
-  } 
-
+}
