@@ -7,8 +7,8 @@ const LanguageSelector = () => {
   const router = useRouter();
 
   const languages = {
-    en: 'English',
-    ru: 'Русский',
+    en: 'Eng',
+    ru: 'Рус',
   };
 
   const onChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
