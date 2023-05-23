@@ -1,16 +1,12 @@
-import { FC } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { JoinGameSchema, JoinGameSchemaType } from '@/lib/schemas';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { FC, FormEventHandler } from 'react';
 import Modal from './Modal/Modal';
 import { useRouter } from 'next/router';
 import { joinGameApi } from '@/lib/api';
 import Button from '../Button/Button';
 import styles from './Modal/Modal.module.scss';
-import { AxiosError } from 'axios';
-import { ResponseError } from '@/lib/types';
 import { useTranslation } from 'next-i18next';
 import { useState } from 'react';
+import useFormErrors from '@/hooks/useFormErrors';
 
 type JoinGameModalProps = {
   isOpen: boolean;
@@ -19,56 +15,51 @@ type JoinGameModalProps = {
 
 const JoinGameModal: FC<JoinGameModalProps> = ({ isOpen, onClose }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [name, setName] = useState('');
+  const [code, setCode] = useState('');
 
   const { t } = useTranslation();
   const router = useRouter();
-  const {
-    handleSubmit,
-    register,
-    setError,
-    formState: { errors },
-  } = useForm<JoinGameSchemaType>({
-    resolver: zodResolver(JoinGameSchema),
-  });
+  const { errors, setAxiosError } = useFormErrors();
 
-  const onSubmit: SubmitHandler<JoinGameSchemaType> = ({ code, name }) => {
+  const onSubmit: FormEventHandler = (e) => {
+    e.preventDefault();
     setIsLoading(true);
-    joinGameApi(code, name)
-      .then((res) => {
-        router.push(`/game/${res.data.code}`);
-      })
-      .catch((error: AxiosError<ResponseError>) => {
-        if (error.response?.data?.fieldErrors?.name) {
-          setError('name', {
-            type: 'manual',
-            message: error.response.data.fieldErrors.name[0],
-          });
-        }
 
-        if (error.response?.data?.fieldErrors?.code) {
-          setError('code', {
-            type: 'manual',
-            message: error.response.data.fieldErrors.code[0],
-          });
-        }
-      })
-      .finally(() => {
+    joinGameApi(code, name)
+      .then((res) => router.push(`/game/${res.data.code}`))
+      .catch((error) => {
+        setAxiosError(error);
         setIsLoading(false);
       });
   };
 
   return (
     <Modal title="Join Game" isOpen={isOpen} onClose={onClose}>
-      <form className={styles['modal-form']} onSubmit={handleSubmit(onSubmit)}>
+      <form className={styles['modal-form']} onSubmit={onSubmit}>
         <label htmlFor="name">{t('your_name')}</label>
-        <input {...register('name')} />
-        <span>{errors?.name?.message}</span>
+        <input
+          id="name"
+          type="text"
+          minLength={2}
+          maxLength={20}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
+        <span>{errors.name}</span>
 
         <label htmlFor="code">{t('game_code')}</label>
-        <input {...register('code')} />
-        <span>{errors?.code?.message}</span>
+        <input
+          id="code"
+          type="text"
+          minLength={6}
+          maxLength={6}
+          onChange={(e) => setCode(e.target.value)}
+          required
+        />
+        <span>{errors.code}</span>
 
-        <Button text={t('join_game')} type="submit" isLoading={isLoading} />
+        <Button type="submit" text={t('join_game')} isLoading={isLoading} />
       </form>
     </Modal>
   );

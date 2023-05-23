@@ -1,6 +1,8 @@
 import axios from './axios';
 import { GameWithRelations } from './types';
 
+/** Games */
+
 export const createGameApi = async (name: string, language: string) => {
   return axios.post<GameWithRelations>('/api/games/create', {
     name,
@@ -16,6 +18,8 @@ export const startGameApi = async (gameId: number) => {
   return axios.post('/api/games/start', { gameId });
 };
 
+/** Answers */
+
 export const saveAnswerApi = async (
   gameId: number,
   roundId: number,
@@ -27,6 +31,8 @@ export const saveAnswerApi = async (
     value,
   });
 };
+
+/** Voting */
 
 export const startVotingApi = async (gameId: number, roundId: number) => {
   return axios.post('/api/votes/start', { gameId, roundId });

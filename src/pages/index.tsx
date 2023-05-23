@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Head from 'next/head';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { sigmar } from '../app/fonts';
+import { sigmar } from '../lib/fonts';
 import Button from '@/components/Button/Button';
 import styles from '@/styles/Home.module.css';
 import CreateGameModal from '@/components/Modals/CreateGameModal';
@@ -20,7 +20,10 @@ export default function Home() {
       <Head>
         <title>Lying Game</title>
         <meta name="description" content="Win by lying!" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1"
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -58,7 +61,7 @@ export default function Home() {
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale ?? 'en', ['common'])),
+      ...(await serverSideTranslations(locale ?? 'en', ['common', 'zod'])),
     },
   };
 };

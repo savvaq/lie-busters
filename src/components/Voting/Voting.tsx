@@ -8,7 +8,7 @@ import useListenToAllPlayersVotedEvent from './useListenToAllPlayersVotedEvent';
 import Button from '../Button/Button';
 import { Player } from '@prisma/client';
 import styles from './Voting.module.scss';
-import { sigmar } from '@/app/fonts';
+import { sigmar } from '@/lib/fonts';
 import Timer from '../Timer/Timer';
 import { useTranslation } from 'next-i18next';
 
@@ -22,8 +22,8 @@ const Voting: FC<VotingProps> = ({ game, currentPlayer }) => {
 
   const currentRound = game.rounds[game.rounds.length - 1];
   const question = currentRound.question;
-  const deadtime = new Date(currentRound.votesStartedAt ?? Date.now());
-  deadtime.setSeconds(deadtime.getSeconds() + 30); // TODO: change to 15
+  const deadline = new Date(currentRound.votesStartedAt ?? Date.now());
+  deadline.setSeconds(deadline.getSeconds() + 30); // TODO: change to 15
 
   const finishVoting = useCallback(() => {
     if (!currentPlayer.isHost || currentRound.finishedAt !== null) return;
@@ -37,7 +37,7 @@ const Voting: FC<VotingProps> = ({ game, currentPlayer }) => {
 
   const [selectedAnswerId, setSelectedAnswerId] = useState<number | null>();
   const options = useOptions(currentRound);
-  const timeLeft = useTimer(deadtime, finishVoting);
+  const timeLeft = useTimer(deadline, finishVoting);
   useListenToAllPlayersVotedEvent(game, finishVoting);
 
   const votesCountForOption = (optionId: number | null) => {
@@ -59,11 +59,14 @@ const Voting: FC<VotingProps> = ({ game, currentPlayer }) => {
   return (
     <>
       <div className={styles['voting-wrapper']}>
-        {currentRound.finishedAt !== null && <Timer timeLeft={timeLeft} />}
+        {(currentRound.finishedAt !== null || selectedAnswerId !== null) && (
+          <Timer timeLeft={timeLeft} />
+        )}
 
         <h1 className={styles.title + ' ' + sigmar.className}>
           {t('round')} {game.rounds.length}
         </h1>
+
         <h2 className={styles.question}>{currentRound.question.text}</h2>
         <div className={styles['answers-block-wrapper']}>
           <p className={styles['sub-header']}>
@@ -93,7 +96,7 @@ const Voting: FC<VotingProps> = ({ game, currentPlayer }) => {
           <Button
             onClick={nextRound}
             text={
-              game.rounds.length === 2 ? t('show_results') : t('next_round')
+              game.rounds.length === 5 ? t('show_results') : t('next_round')
             }
           />
         )}

@@ -2,7 +2,7 @@ import { GameWithRelations } from '@/lib/types';
 import { FC } from 'react';
 import ScoreboardCard from '../ScoreboardCard/ScoreboardCard';
 import styles from './Scoreboard.module.scss';
-import { sigmar } from '../../app/fonts';
+import { sigmar } from '../../lib/fonts';
 import Button from '../Button/Button';
 import Link from 'next/link';
 // import { useTranslation } from 'next-i18next';
