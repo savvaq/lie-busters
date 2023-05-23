@@ -1,14 +1,12 @@
-import { FC } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { FC, FormEventHandler } from 'react';
 import { useTranslation } from 'next-i18next';
-import { CreateGameSchemaType, CreateGameSchema } from '@/lib/schemas';
-import { zodResolver } from '@hookform/resolvers/zod';
 import Modal from './Modal/Modal';
 import { useRouter } from 'next/router';
 import { createGameApi } from '@/lib/api';
 import Button from '../Button/Button';
 import styles from './Modal/Modal.module.scss';
 import { useState } from 'react';
+import useFormErrors from '@/hooks/useFormErrors';
 
 type CreateGameModalProps = {
   isOpen: boolean;
@@ -17,40 +15,40 @@ type CreateGameModalProps = {
 
 const CreateGameModal: FC<CreateGameModalProps> = ({ isOpen, onClose }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [name, setName] = useState('');
+
   const router = useRouter();
   const { t, i18n } = useTranslation();
+  const { errors, setAxiosError } = useFormErrors();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<CreateGameSchemaType>({
-    resolver: zodResolver(CreateGameSchema),
-  });
-
-  const onSubmit: SubmitHandler<CreateGameSchemaType> = ({ name }) => {
+  const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
     setIsLoading(true);
+
     createGameApi(name, i18n.language)
-      .then((res) => {
-        router.push(`/game/${res.data.code}`);
-      })
+      .then((res) => router.push(`/game/${res.data.code}`))
       .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
+        setAxiosError(error);
         setIsLoading(false);
-      }
-    );
+      });
   };
 
   return (
     <Modal title="Create Game" isOpen={isOpen} onClose={onClose}>
-      <form onSubmit={handleSubmit(onSubmit)} className={styles['modal-form']}>
+      <form className={styles['modal-form']} onSubmit={onSubmit}>
         <label htmlFor="name">{t('your_name')}</label>
-        <input {...register('name')} />
-        <span>{errors?.name?.message || ''}</span>
+        <input
+          id="name"
+          type="text"
+          minLength={2}
+          maxLength={20}
+          onChange={(e) => setName(e.target.value)}
+          value={name}
+          required
+        />
+        <span>{errors.name}</span>
 
-        <Button text={t('create_game')} type="submit" isLoading={isLoading} />
+        <Button type="submit" text={t('create_game')} isLoading={isLoading} />
       </form>
     </Modal>
   );

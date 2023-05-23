@@ -4,7 +4,7 @@ import { ResponseError } from '@/lib/types';
 import pusher from '@/lib/pusher';
 import { getCookie } from 'cookies-next';
 import { createAnswer, findGameById } from '@/lib/repository';
-import CustomZodError from '@/errors/CustomZodError';
+import { ZodError } from 'zod';
 
 export default async function handler(
   req: NextApiRequest,
@@ -27,7 +27,14 @@ export default async function handler(
   const secondsPassed = (Date.now() - round.startedAt.getTime()) / 1000;
 
   if (round.votesStartedAt || round.finishedAt || secondsPassed >= 35) {
-    const error = new CustomZodError('value', 'Too late');
+    const error = new ZodError([
+      {
+        path: ['value'],
+        message: '',
+        code: 'custom',
+        params: { i18n: { key: 'too_late' } },
+      },
+    ]);
     return res.status(422).json(error.flatten());
   }
 

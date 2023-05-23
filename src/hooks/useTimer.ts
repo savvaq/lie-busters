@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
-const useTimer = (deadtime: Date, onTimeOut: () => void) => {
+const useTimer = (deadline: Date, onTimeOut: () => void) => {
   const now = new Date();
-  const diffInSeconds = Math.floor((deadtime.getTime() - now.getTime()) / 1000);
+  const diffInSeconds = Math.floor((deadline.getTime() - now.getTime()) / 1000);
 
   const [timeLeft, setTimeLeft] = useState(diffInSeconds);
 

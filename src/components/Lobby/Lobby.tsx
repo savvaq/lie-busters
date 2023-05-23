@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { GameWithRelations } from '@/lib/types';
 import { startGameApi } from '@/lib/api';
 import styles from './Lobby.module.scss';
-import { sigmar } from '../../app/fonts';
+import { sigmar } from '../../lib/fonts';
 import Button from '@/components/Button/Button';
 import { useState } from 'react';
 import { useTranslation } from 'next-i18next';
