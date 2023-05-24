@@ -43,17 +43,16 @@ export default function Home() {
           />
         </div>
       </div>
-      <div 
-        className={styles.modal}>
-          <CreateGameModal
-            isOpen={showCreateGameModal}
-            onClose={() => setShowCreateGameModal(false)}
-          />
+      <div className={styles.modal}>
+        <CreateGameModal
+          isOpen={showCreateGameModal}
+          onClose={() => setShowCreateGameModal(false)}
+        />
 
-          <JoinGameModal
-            isOpen={showJoinGameModal}
-            onClose={() => setShowJoinGameModal(false)}
-          />
+        <JoinGameModal
+          isOpen={showJoinGameModal}
+          onClose={() => setShowJoinGameModal(false)}
+        />
       </div>
     </>
   );
@@ -62,7 +61,11 @@ export default function Home() {
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale ?? 'en', ['common', 'zod'])),
+      ...(await serverSideTranslations(locale ?? 'en', [
+        'common',
+        'zod',
+        'custom',
+      ])),
     },
   };
 };

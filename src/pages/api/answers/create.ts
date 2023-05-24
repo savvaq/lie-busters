@@ -5,6 +5,7 @@ import pusher from '@/lib/pusher';
 import { getCookie } from 'cookies-next';
 import { createAnswer, findGameById } from '@/lib/repository';
 import { ZodError } from 'zod';
+import { i18n } from 'next-i18next';
 
 export default async function handler(
   req: NextApiRequest,
@@ -26,13 +27,25 @@ export default async function handler(
 
   const secondsPassed = (Date.now() - round.startedAt.getTime()) / 1000;
 
-  if (round.votesStartedAt || round.finishedAt || secondsPassed >= 35) {
+  if (round.votesStartedAt || round.finishedAt || secondsPassed >= 65) {
     const error = new ZodError([
       {
         path: ['value'],
-        message: '',
+        message: i18n?.t('too_late', { ns: 'custom' }) ?? '',
         code: 'custom',
-        params: { i18n: { key: 'too_late' } },
+      },
+    ]);
+    return res.status(422).json(error.flatten());
+  }
+
+  const correctAnswer = round.question.correctAnswer.toLowerCase();
+
+  if (value.toLowerCase() === correctAnswer) {
+    const error = new ZodError([
+      {
+        path: ['value'],
+        message: i18n?.t('correct_answer_given', { ns: 'custom' }) ?? '',
+        code: 'custom',
       },
     ]);
     return res.status(422).json(error.flatten());
