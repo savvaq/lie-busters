@@ -1,5 +1,6 @@
 {
   "cant_join_game": "Can't join game",
   "name_already_taken": "Name already taken",
-  "too_late": "Too late"
+  "too_late": "Too late",
+  "correct_answer_given": "You've guessed the correct answer! Now come up with a lie."
 }

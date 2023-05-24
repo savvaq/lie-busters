@@ -1,83 +1,93 @@
 .question-wrapper {
-    display: grid;
-    max-width: 1000px;
-    height: fit-content;
-    row-gap: 6rem;
+  display: grid;
+  max-width: 1000px;
+  height: fit-content;
+  row-gap: 5rem;
+  justify-content: center;
 }
 
 .question {
-    color: white;
-    font-size: 60px;
-    font-weight: 400;
-    margin: 0;
-    text-align: center;
+  color: white;
+  font-size: 60px;
+  font-weight: 400;
+  margin: 0;
+  text-align: center;
 }
 
 .title {
-    color: #f7b911;
-    font-size: 80px;
-    margin: 0;
-    line-height: 80px;
-    justify-self: center;
+  color: #f7b911;
+  font-size: 80px;
+  margin: 0;
+  line-height: 80px;
+  justify-self: center;
 }
 
 .input {
-    width: 80%;
-    color: #f7b911;
-    justify-self: center;
-    height: 100%;
-    border: none;
-    outline: none;
-    background: transparent;
-    font-size: 60px;
-    font-weight: 400;
-    border-bottom: 1px solid #f7b911;
+  width: 80%;
+  color: #f7b911;
+  justify-self: center;
+  height: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 60px;
+  font-weight: 400;
+  border-bottom: 1px solid #f7b911;
 }
 
 .answer {
-    width: fit-content;
-    color: #f7b911;
-    justify-self: center;
-    height: 100%;
-    border: 1px solid #f7b911;
-    font-size: 60px;
-    font-weight: 400;
-    text-align: center;
-    padding: 0 1rem;
+  width: fit-content;
+  color: #f7b911;
+  justify-self: center;
+  height: 100%;
+  border: 1px solid #f7b911;
+  font-size: 60px;
+  font-weight: 400;
+  text-align: center;
+  padding: 0 1rem;
+}
+
+.error {
+  display: block;
+  color: red;
+  font-size: 30px;
+  font-weight: 400;
+  margin-top: 1rem;
+  justify-self: center;
 }
 
 .description {
-    color: white;
-    font-size: 30px;
-    font-weight: 400;
-    margin: 0;
-    justify-self: center;
+  color: white;
+  font-size: 30px;
+  font-weight: 400;
+  margin: 0;
+  justify-self: center;
 }
 
 @media (max-width: 440px) {
-    .question-wrapper {
-        row-gap: 2rem;
-    }
+  .question-wrapper {
+    row-gap: 2rem;
+  }
 
-    .question {
-        font-size: 30px;
-        text-align: center;
-    }
+  .question {
+    font-size: 30px;
+    text-align: center;
+  }
 
-    .title {
-        font-size: 50px;
-        line-height: 50px;
-    }
+  .title {
+    font-size: 50px;
+    line-height: 50px;
+  }
 
-    .input {
-        font-size: 25px;
-    }
+  .input {
+    font-size: 25px;
+  }
 
-    .answer {
-        font-size: 35px;
-    }
+  .answer {
+    font-size: 35px;
+  }
 
-    .description {
-        font-size: 20px;
-    }
+  .description {
+    font-size: 20px;
+  }
 }

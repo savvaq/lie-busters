@@ -8,7 +8,7 @@ import { makeZodI18nMap } from 'zod-i18n-map';
 
 const App = ({ Component, pageProps }: AppProps) => {
   const { t } = useTranslation();
-  z.setErrorMap(makeZodI18nMap({ t, ns: ['zod', 'custom'] }));
+  z.setErrorMap(makeZodI18nMap({ t, ns: ['common', 'zod', 'custom'] }));
 
   return (
     <main className={rubik.className}>

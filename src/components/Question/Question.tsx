@@ -25,7 +25,7 @@ const Question: FC<QuestionProps> = ({ game, isHost }) => {
 
   const currentRound = game.rounds[game.rounds.length - 1];
   const deadline = new Date(currentRound.startedAt);
-  deadline.setSeconds(deadline.getSeconds() + 30);
+  deadline.setSeconds(deadline.getSeconds() + 360);
 
   const startVoting = useCallback(() => {
     if (!isHost) return;
@@ -67,17 +67,19 @@ const Question: FC<QuestionProps> = ({ game, isHost }) => {
         </>
       ) : (
         <>
-          <input
-            type="text"
-            className={styles.input}
-            placeholder={`${t('type_your_lie_here')}...`}
-            onChange={(e) => setValue(e.target.value)}
-            maxLength={24}
-            autoCapitalize="off"
-            autoFocus
-            required
-          />
-          <span>{errors.value}</span>
+          <div>
+            <input
+              type="text"
+              className={styles.input}
+              placeholder={`${t('type_your_lie_here')}...`}
+              onChange={(e) => setValue(e.target.value)}
+              maxLength={24}
+              autoCapitalize="off"
+              autoFocus
+              required
+            />
+            <span className={styles.error}>{errors.value}</span>
+          </div>
           <Button
             type="submit"
             size="large"
