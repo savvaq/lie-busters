@@ -73,6 +73,8 @@ const Question: FC<QuestionProps> = ({ game, isHost }) => {
             placeholder={`${t('type_your_lie_here')}...`}
             onChange={(e) => setValue(e.target.value)}
             maxLength={24}
+            autoCapitalize="off"
+            autoFocus
             required
           />
           <span>{errors.value}</span>
