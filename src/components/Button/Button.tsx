@@ -1,6 +1,7 @@
 import { ButtonHTMLAttributes, FC } from 'react';
 import classNames from 'classnames';
 import styles from './Button.module.scss';
+import { motion } from "framer-motion";
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   text: string;
@@ -14,14 +15,19 @@ const Button: FC<ButtonProps> = ({
   size = 'medium',
   ...props
 }) => {
-  return (
-    <button
+  return (  
+    <motion.button
+      whileHover={{
+        scale: 1.1,
+        transition: {duration: 0.2},
+      }}
+      whileTap={{ scale: 0.9 }}
       className={classNames(styles.button, styles[size])}
       {...props}
       disabled={props.disabled || isLoading}
     >
       {isLoading ? <div className={styles.loader}></div> : text}
-    </button>
+    </motion.button>
   );
 };
 

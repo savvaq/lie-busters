@@ -9,6 +9,7 @@ import CreateGameModal from '@/components/Modals/CreateGameModal';
 import JoinGameModal from '@/components/Modals/JoinGameModal';
 import LanguageSelector from '@/components/LanguageSelector/LanguageSelector';
 import { GetServerSideProps } from 'next';
+import { motion } from "framer-motion"
 
 export default function Home() {
   const { t } = useTranslation();
@@ -43,16 +44,17 @@ export default function Home() {
           />
         </div>
       </div>
-      <div className={styles.modal}>
-        <CreateGameModal
-          isOpen={showCreateGameModal}
-          onClose={() => setShowCreateGameModal(false)}
-        />
+      <div 
+        className={styles.modal}>
+          <CreateGameModal
+            isOpen={showCreateGameModal}
+            onClose={() => setShowCreateGameModal(false)}
+          />
 
-        <JoinGameModal
-          isOpen={showJoinGameModal}
-          onClose={() => setShowJoinGameModal(false)}
-        />
+          <JoinGameModal
+            isOpen={showJoinGameModal}
+            onClose={() => setShowJoinGameModal(false)}
+          />
       </div>
     </>
   );

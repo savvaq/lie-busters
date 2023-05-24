@@ -6,6 +6,7 @@ import { sigmar } from '../../lib/fonts';
 import Button from '@/components/Button/Button';
 import { useState } from 'react';
 import { useTranslation } from 'next-i18next';
+import { motion } from 'framer-motion';
 
 type LobbyProps = {
   game: GameWithRelations;
@@ -34,7 +35,12 @@ const Lobby: FC<LobbyProps> = ({ game, isHost }) => {
       <h1 className={styles.title + ' ' + sigmar.className}>Lie Busters</h1>
       <div className={styles['game-code-wrapper']}>
         <p className={styles['game-code-text']}>{t('game_code')}</p>
-        <div
+        <motion.div
+          whileHover={{
+            scale: 1.1,
+            transition: { duration: 0.2 },
+          }}
+          whileTap={{ scale: 0.8 }}
           onClick={() => {
             navigator.clipboard.writeText(game.code);
             showTooltip();
@@ -43,21 +49,27 @@ const Lobby: FC<LobbyProps> = ({ game, isHost }) => {
         >
           {game.code}
           {tooltip && <div className={styles['tooltip']}>{t('copied')}!</div>}
-        </div>
+        </motion.div>
       </div>
       <h2 className={styles['players-header'] + ' ' + sigmar.className}>
         {t('players')}
       </h2>
       <div className={styles['players-wrapper']}>
         {game.players.map((player) => (
-          <div key={player.id} className={styles['player-wrapper']}>
+          <motion.div 
+            key={player.id} 
+            className={styles['player-wrapper']}
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+          >
             <div className={styles['player-icon']}>
               <img src={`/avatars/${player.avatar}`} alt={player.name} />
             </div>
             <div className={styles['player-name-wrapper']}>
               <span className={styles['player-name-text']}>{player.name}</span>
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
       {isHost ? (
