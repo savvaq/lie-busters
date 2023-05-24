@@ -147,7 +147,7 @@
   }
 
   .players-wrapper {
-    grid-template-columns: repeat(auto-fit, minmax(140px, 140px));
+    grid-template-columns: repeat(2, 1fr);
     row-gap: 1.5rem;
     max-width: 90%;
   }
@@ -159,8 +159,9 @@
 
   .player-name-wrapper {
     height: 20px;
-    width: 100px;
+    min-width: 100px;
     font-size: 1rem;
+    width: fit-content;
   }
 
   .tooltip {

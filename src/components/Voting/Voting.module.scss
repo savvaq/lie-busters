@@ -1,11 +1,5 @@
 .voting-wrapper {
     display: grid;
-    position: absolute;
-    margin: auto;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
     max-width: 1000px;
     height: fit-content;
     row-gap: 6rem;
@@ -45,7 +39,7 @@
     }
 
     .voting-wrapper {
-        row-gap: 1.5rem;
+        row-gap: 1rem;
     }
 
     .question {
