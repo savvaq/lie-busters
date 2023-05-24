@@ -1,7 +1,7 @@
 import { ButtonHTMLAttributes, FC } from 'react';
 import classNames from 'classnames';
 import styles from './Button.module.scss';
-import { HTMLMotionProps, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 type ButtonProps = HTMLMotionProps<'button'> & {
   text: string;
