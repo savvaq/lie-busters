@@ -1,5 +1,5 @@
 import { GameWithRelations, VoteOption } from '@/lib/types';
-import { FC, useCallback, useState } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import useOptions from './useOptions';
 import VoteCard from '../VoteCard/VoteCard';
 import useTimer from '@/hooks/useTimer';
@@ -36,7 +36,13 @@ const Voting: FC<VotingProps> = ({ game, currentPlayer }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedAnswerId, setSelectedAnswerId] = useState<number | null>();
   const options = useOptions(currentRound);
-  const timeLeft = useTimer(deadline, finishVoting);
+  const { timeLeft, stopTimer } = useTimer(deadline, finishVoting);
+
+  useEffect(() => {
+    if (currentRound.finishedAt !== null) {
+      stopTimer();
+    }
+  }, [currentRound.finishedAt, stopTimer]);
 
   const nextRound = () => {
     setIsLoading(true);
@@ -56,7 +62,9 @@ const Voting: FC<VotingProps> = ({ game, currentPlayer }) => {
     if (selectedAnswerId) return;
 
     setSelectedAnswerId(answerId);
-    voteApi(game.id, currentRound.id, answerId);
+    voteApi(game.id, currentRound.id, answerId).catch(() =>
+      setSelectedAnswerId(null)
+    );
   };
 
   return (

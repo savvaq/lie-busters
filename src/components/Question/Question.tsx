@@ -33,7 +33,8 @@ const Question: FC<QuestionProps> = ({ game, isHost }) => {
     startVotingApi(game.id, currentRound.id);
   }, [game, currentRound, isHost]);
 
-  const timeLeft = useTimer(deadline, startVoting);
+  const { timeLeft } = useTimer(deadline, startVoting);
+
   useListenToAllPlayersAnsweredEvent(game, startVoting);
 
   const onSubmit: FormEventHandler = (e) => {
