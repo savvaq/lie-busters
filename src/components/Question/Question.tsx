@@ -25,7 +25,7 @@ const Question: FC<QuestionProps> = ({ game, isHost }) => {
 
   const currentRound = game.rounds[game.rounds.length - 1];
   const deadline = new Date(currentRound.startedAt);
-  deadline.setSeconds(deadline.getSeconds() + 360);
+  deadline.setSeconds(deadline.getSeconds() + 60);
 
   const startVoting = useCallback(() => {
     if (!isHost) return;
