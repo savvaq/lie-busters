@@ -6,6 +6,7 @@ import { getCookie } from 'cookies-next';
 import { createAnswer, findGameById } from '@/lib/repository';
 import { ZodError } from 'zod';
 import { i18n } from 'next-i18next';
+import config from '@/config.json';
 
 export default async function handler(
   req: NextApiRequest,
@@ -27,11 +28,15 @@ export default async function handler(
 
   const secondsPassed = (Date.now() - round.startedAt.getTime()) / 1000;
 
-  if (round.votesStartedAt || round.finishedAt || secondsPassed >= 65) {
+  if (
+    round.votesStartedAt ||
+    round.finishedAt ||
+    secondsPassed >= config.timeToAnswer + 5
+  ) {
     const error = new ZodError([
       {
         path: ['value'],
-        message: i18n?.t('too_late', { ns: 'custom' }) ?? '',
+        message: i18n?.t('too_late', { ns: 'custom' }) ?? 'Too late',
         code: 'custom',
       },
     ]);
@@ -44,7 +49,9 @@ export default async function handler(
     const error = new ZodError([
       {
         path: ['value'],
-        message: i18n?.t('correct_answer_given', { ns: 'custom' }) ?? '',
+        message:
+          i18n?.t('correct_answer_given', { ns: 'custom' }) ??
+          "You've guessed the correct answer! Now come up with a lie.",
         code: 'custom',
       },
     ]);

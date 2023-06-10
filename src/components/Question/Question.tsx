@@ -9,6 +9,7 @@ import Button from '../Button/Button';
 import Timer from '../Timer/Timer';
 import { useTranslation } from 'next-i18next';
 import useFormErrors from '@/hooks/useFormErrors';
+import config from '@/config.json';
 
 type QuestionProps = {
   game: GameWithRelations;
@@ -25,7 +26,7 @@ const Question: FC<QuestionProps> = ({ game, isHost }) => {
 
   const currentRound = game.rounds[game.rounds.length - 1];
   const deadline = new Date(currentRound.startedAt);
-  deadline.setSeconds(deadline.getSeconds() + 60);
+  deadline.setSeconds(deadline.getSeconds() + config.timeToAnswer);
 
   const startVoting = useCallback(() => {
     if (!isHost) return;

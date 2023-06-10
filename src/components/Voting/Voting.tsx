@@ -11,6 +11,7 @@ import styles from './Voting.module.scss';
 import { sigmar } from '@/lib/fonts';
 import Timer from '../Timer/Timer';
 import { useTranslation } from 'next-i18next';
+import config from '@/config.json';
 
 type VotingProps = {
   game: GameWithRelations;
@@ -23,7 +24,7 @@ const Voting: FC<VotingProps> = ({ game, currentPlayer }) => {
   const currentRound = game.rounds[game.rounds.length - 1];
   const question = currentRound.question;
   const deadline = new Date(currentRound.votesStartedAt ?? Date.now());
-  deadline.setSeconds(deadline.getSeconds() + 30); // TODO: change to 15
+  deadline.setSeconds(deadline.getSeconds() + config.timeToVote);
 
   const finishVoting = useCallback(() => {
     if (!currentPlayer.isHost || currentRound.finishedAt !== null) return;
